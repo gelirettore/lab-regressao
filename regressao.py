@@ -51,7 +51,7 @@ def main():
 	x5 = dados['f11']
 	X = np.vstack((x1, x2,x3,x4,x5))
 
-	X_train, X_test, y1_train, y1_test, y2_train, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=50)
+	X_train, X_test, y1_train, y1_test = train_test_split(X, y1, test_size=0.5, random_state=50)
 	
 	#normalizando dados
 	min_max_scaler = preprocessing.MinMaxScaler()
