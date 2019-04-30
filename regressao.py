@@ -40,9 +40,9 @@ def SvrRegr(X_train, X_test, y_train, y_test):
 	y_lin = svr_lin.fit(X_train, y_train).predict(X)
 	y_poly = svr_poly.fit(X_train, y_train).predict(X)
 
-	debug("SVR(rbf)" + str(metrics.mean_absolute_error(y_test, y_rbf)))
-	debug("SVR(linear)" + str(metrics.mean_absolute_error(y_test, y_lin)))
-	debug("SVR(poly)" + str(metrics.mean_absolute_error(y_test, y_poly)))
+	debug("SVR(rbf): " + str(metrics.mean_absolute_error(y_test, y_rbf)))
+	debug("SVR(linear): " + str(metrics.mean_absolute_error(y_test, y_lin)))
+	debug("SVR(poly): " + str(metrics.mean_absolute_error(y_test, y_poly)))
 
 #=======================
 def main():
