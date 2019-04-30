@@ -32,6 +32,7 @@ def SvrRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando SVR")
 	#SVR + RBF
 	clf_rbf = SVR(kernel='rbf', gamma='scale', C=1.0, epsilon=0.1)
+	debug("Fitting...")
 	clf_rbf.fit(X_train, y_train)
 	debug("Predicting...")
 	y_pred = clf_rbf.predict(X_test)
