@@ -36,10 +36,10 @@ def SvrRegr(X_train, X_test, y_train, y_test):
 	svr_poly = SVR(kernel='poly', C=100, gamma='auto', degree=3, epsilon=.1,coef0=1)
 	
 	debug("Fitting and predicting...")
-	y_rbf = svr_rbf.fit(X_train, y_train).predict(X)
-	y_lin = svr_lin.fit(X_train, y_train).predict(X)
-	y_poly = svr_poly.fit(X_train, y_train).predict(X)
-
+	y_rbf = svr_rbf.fit(X_train, y_train).predict(X_test)
+	y_lin = svr_lin.fit(X_train, y_train).predict(X_test)
+	y_poly = svr_poly.fit(X_train, y_train).predict(X_test)
+	
 	debug("SVR(rbf): " + str(metrics.mean_absolute_error(y_test, y_rbf)))
 	debug("SVR(linear): " + str(metrics.mean_absolute_error(y_test, y_lin)))
 	debug("SVR(poly): " + str(metrics.mean_absolute_error(y_test, y_poly)))
