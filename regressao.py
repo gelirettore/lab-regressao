@@ -5,9 +5,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
 from sklearn.svm import SVR
-from sklearn.metrics import confusion_matrix
+import sklearn.metrics
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 data = "usina72.csv"
@@ -44,7 +45,7 @@ def main():
 	y1 = dados['f3'].values
 	y2 = dados['f5'].values
 	
-	X = dados[['f4'], ['f6'], ['f9'], ['f10'], ['f11']].values
+	X = dados[['f4','f6','f9','f10','f11']].values
 	
 	X_train, X_test, y1_train, y1_test, y2_train, y2_test = train_test_split(X, y1, test_size=0.5, random_state=50)
 	
