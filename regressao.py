@@ -23,16 +23,15 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	#Treina modelo
 	regr.fit(X_train, y_train)
 	y_pred = regr.predict(X_test)
-	debug('Regressao Linear (MSE):' + metrics.mean_absolute_error(y_test, y_pred))
+	debug('Regressao Linear (MSE):' + str(metrics.mean_absolute_error(y_test, y_pred)))
 
 def SvrRegr(X_train, X_test, y_train, y_test):
 	#SVR + RBF
 	clf_rbf = SVR(kernel='rbf', gamma='scale', C=1.0, epsilon=0.1)
 	clf_rbf.fit(X_train, y_train)
-	score_rbf = clf_rbf.score(X_test, y_test)
+	
 	predict_rbf = clf_rbf.predict(X_test)
-	print score_rbf
-	debug("SVR + RBF score: " + score_rbf)
+	print "SVR(rbf)" + str(metrics.mean_absolute_error(y_test, y_pred))
 
 def main():
 	debug("Carregando dados")
@@ -59,7 +58,7 @@ def main():
 
 	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
-	#SvrRegr(X_train_minmax, X_test_minmax, y_train, y_test)
+	SvrRegr(X_train_minmax, X_test_minmax, y_train, y_test)
 
 
 if __name__ == "__main__":
