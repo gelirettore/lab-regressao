@@ -43,14 +43,13 @@ def main():
     dados = pd.read_csv(data)
     y1 = dados['f3']
     y2 = dados['f5']
-    #y  = np.concatenate((y1, y2), axis=1)
-    print y1
 
     x1 = dados['f4']
     X2 = dados['f6']
     x3 = dados['f9']
     x4 = dados['f10']
     x5 = dados['f11']
+    x = np.concatenate((x1, x2.T), axis=1)
 #	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=50)
 #	min_max_scaler = preprocessing.MinMaxScaler()
 #	X_train_minmax = min_max_scaler.fit_transform(X_train)
