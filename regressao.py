@@ -58,7 +58,7 @@ def main():
 
 	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
-	SvrRegr(X_train_minmax, X_test_minmax, y_train, y_test)
+	#SvrRegr(X_train_minmax, X_test_minmax, y_train, y_test)
 
 
 if __name__ == "__main__":
