@@ -22,6 +22,9 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	
 	#Treina modelo
 	regr.fit(X_train, y_train)
+	coeff_df = pd.DataFrame(regressor.coef_, X.columns, columns=['Coefficient'])
+	print coeff_df
+
 
 	score_train = regr.score(X_train, y_train)
 	score_test = regr.score(X_test, y_test)
