@@ -23,7 +23,7 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	#Treina modelo
 	regr.fit(X_train, y_train)
 	y_pred = regr.predict(X_test)
-	debug('Regressao Linear (MSE):', metrics.mean_absolute_error(y_test, y_pred))
+	debug('Regressao Linear (MSE):' + metrics.mean_absolute_error(y_test, y_pred))
 
 def SvrRegr(X_train, X_test, y_train, y_test):
 	#SVR + RBF
