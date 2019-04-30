@@ -94,7 +94,7 @@ def main():
 	LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#SvrRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#SvrRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
-	knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	knnRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 
 if __name__ == "__main__":
 	main()
