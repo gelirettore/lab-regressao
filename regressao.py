@@ -42,8 +42,8 @@ def main():
 	#carrega dados e divide
 
 	dados = pd.read_csv(data)
-	y1 = dados['f3'].values
-	y2 = dados['f5'].values
+	y1 = dados['f3'].values.reshape(-1,1)
+	y2 = dados['f5'].values.reshape(-1,1)
 	
 	X = dados[['f4','f6','f9','f10','f11']].values
 	
