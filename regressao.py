@@ -49,7 +49,7 @@ def main():
     x3 = dados['f9']
     x4 = dados['f10']
     x5 = dados['f11']
-    x = np.vstack((x1, x2,x3,x4,x5)
+    x = np.vstack((x1, x2,x3,x4,x5))
     print x
 #	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=50)
 #	min_max_scaler = preprocessing.MinMaxScaler()
