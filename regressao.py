@@ -24,7 +24,7 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	#Treina modelo
 	regr.fit(X_train, y_train)
 	y_pred = regr.predict(X_test)
-	print y_pre
+	print y_pred
 	debug('Regressao Linear (MSE):' + str(metrics.mean_absolute_error(y_test, y_pred)))
 
 #=======================
