@@ -45,7 +45,7 @@ def main():
     y2 = dados['f5']
 
     x1 = dados['f4']
-    X2 = dados['f6']
+    x2 = dados['f6']
     x3 = dados['f9']
     x4 = dados['f10']
     x5 = dados['f11']
