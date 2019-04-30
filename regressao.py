@@ -23,10 +23,7 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	#Treina modelo
 	regr.fit(X_train, y_train)
 	y_pred = regr.predict(X_test)
-	df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
-	df1 = df.head(25)
-	print df
-	print df1
+	print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))  
 
 
 	score_train = regr.score(X_train, y_train)
@@ -66,25 +63,7 @@ def main():
 	y2_test_minmax = min_max_scaler.fit_transform(y2_test)
 	y2_train_minmax = min_max_scaler.fit_transform(y2_train)
 
-	#Cria modelo
-	regr = LinearRegression()
-	
-	#Treina modelo
-	regr.fit(X_train, y_train)
-	y_pred = regr.predict(X_test)
-	#df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
-	#df1 = df.head(25)
-	#print df
-	#print df1
-	
-	coeff_df = pd.DataFrame(regr.coef_, X.columns, columns=['Coefficient'])
-	print coeff_df
-	#score_train = regr.score(X_train, y_train)
-	#score_test = regr.score(X_test, y_test)
-	#debug('Regressao Linear (treino): %.2f' % score_train)
-	#debug('Regressao Linear (teste): %.2f' % score_test)
-
-	#LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	#LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#SvrRegr(X_train_minmax, X_test_minmax, y_train, y_test)
 
