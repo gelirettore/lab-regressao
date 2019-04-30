@@ -16,6 +16,7 @@ data = "usina72.csv"
 def debug(text):
 	print(str(text));
 
+#======================
 def LinearRegr(X_train, X_test, y_train, y_test):
 	#Cria modelo
 	regr = LinearRegression()
@@ -25,14 +26,16 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	y_pred = regr.predict(X_test)
 	debug('Regressao Linear (MSE):' + str(metrics.mean_absolute_error(y_test, y_pred)))
 
+#=======================
 def SvrRegr(X_train, X_test, y_train, y_test):
 	#SVR + RBF
 	clf_rbf = SVR(kernel='rbf', gamma='scale', C=1.0, epsilon=0.1)
 	clf_rbf.fit(X_train, y_train)
 	
 	predict_rbf = clf_rbf.predict(X_test)
-	print "SVR(rbf)" + str(metrics.mean_absolute_error(y_test, y_pred))
+	print "SVR(rbf)" + str(metrics.mean_absolute_error(y_test, predict_rbf))
 
+#=======================
 def main():
 	debug("Carregando dados")
 	#carrega dados e divide
