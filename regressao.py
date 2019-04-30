@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
 from sklearn.svm import SVR
-import sklearn.metrics
+from sklearn import metrics
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -23,7 +23,7 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	#Treina modelo
 	regr.fit(X_train, y_train)
 	y_pred = regr.predict(X_test)
-	print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))  
+	print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))
 
 
 	score_train = regr.score(X_train, y_train)
