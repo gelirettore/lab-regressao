@@ -45,6 +45,7 @@ def main():
 	dados = pd.read_csv(data)
 	y1 = dados['f3'].values.reshape(-1,1)
 	y2 = dados['f5'].values.reshape(-1,1)
+
 	
 	X = dados[['f4','f6','f9','f10','f11']].values
 	
@@ -63,7 +64,7 @@ def main():
 
 	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
-	SvrRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	SvrRegr(X_train_minmax, X_test_minmax, y1_train.values.reshape(-1,), y1_test.values.reshape(-1,))
 
 
 if __name__ == "__main__":
