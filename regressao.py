@@ -23,13 +23,7 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	#Treina modelo
 	regr.fit(X_train, y_train)
 	y_pred = regr.predict(X_test)
-	print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))
-
-
-	score_train = regr.score(X_train, y_train)
-	score_test = regr.score(X_test, y_test)
-	debug('Regressao Linear (treino): %.2f' % score_train)
-	debug('Regressao Linear (teste): %.2f' % score_test)
+	debug('Regressao Linear (MSE):', metrics.mean_absolute_error(y_test, y_pred))
 
 def SvrRegr(X_train, X_test, y_train, y_test):
 	#SVR + RBF
@@ -64,7 +58,7 @@ def main():
 	y2_train_minmax = min_max_scaler.fit_transform(y2_train)
 
 	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
-	#LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#SvrRegr(X_train_minmax, X_test_minmax, y_train, y_test)
 
 
