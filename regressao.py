@@ -18,23 +18,24 @@ def debug(text):
 
 #======================
 def LinearRegr(X_train, X_test, y_train, y_test):
+	debug("Calculando regressao linear")
 	#Cria modelo
 	regr = LinearRegression()
 	
 	#Treina modelo
 	regr.fit(X_train, y_train)
 	y_pred = regr.predict(X_test)
-	print y_pred
 	debug('Regressao Linear (MSE):' + str(metrics.mean_absolute_error(y_test, y_pred)))
 
 #=======================
 def SvrRegr(X_train, X_test, y_train, y_test):
+	debug("Calculando SVR")
 	#SVR + RBF
 	clf_rbf = SVR(kernel='rbf', gamma='scale', C=1.0, epsilon=0.1)
-	clf_rbf.fit(X_train, y_train.values.ravel())
+	clf_rbf.fit(X_train, y_train.ravel())
 	
-	y_pred = clf_rbf.predict(X_test)
-	print "SVR(rbf)" + str(metrics.mean_absolute_error(y_test, y_pred))
+	#y_pred = clf_rbf.predict(X_test)
+	#print "SVR(rbf)" + str(metrics.mean_absolute_error(y_test, y_pred))
 
 #=======================
 def main():
