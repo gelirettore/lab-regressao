@@ -22,8 +22,11 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	
 	#Treina modelo
 	regr.fit(X_train, y_train)
-	coeff_df = pd.DataFrame(regr.coef_, X.columns, columns=['Coefficient'])
-	print coeff_df
+	y_pred = regr.predict(X_test)
+	df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
+	df1 = df.head(25)
+	print df
+	print df1
 
 
 	score_train = regr.score(X_train, y_train)
