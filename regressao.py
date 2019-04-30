@@ -43,8 +43,8 @@ def main():
     dados = pd.read_csv(data)
     y1 = dados['f3']
     y2 = dados['f5']
-    y  = np.concatenate((y1, y2), axis=1)
-    print y
+    #y  = np.concatenate((y1, y2), axis=1)
+    print y1
 
     x1 = dados['f4']
     X2 = dados['f6']
