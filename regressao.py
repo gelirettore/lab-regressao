@@ -31,11 +31,10 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 def SvrRegr(X_train, X_test, y_train, y_test):
 	#SVR + RBF
 	clf_rbf = SVR(kernel='rbf', gamma='scale', C=1.0, epsilon=0.1)
-	clf_rbf.fit(X_train, y_train)
+	clf_rbf.fit(X_train, y_train.values.ravel())
 	
 	y_pred = clf_rbf.predict(X_test)
-	print y_pred
-	#print "SVR(rbf)" + str(metrics.mean_absolute_error(y_test, y_pred))
+	print "SVR(rbf)" + str(metrics.mean_absolute_error(y_test, y_pred))
 
 #=======================
 def main():
