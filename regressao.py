@@ -49,14 +49,23 @@ def main():
     x3 = dados['f9']
     x4 = dados['f10']
     x5 = dados['f11']
-    x = np.vstack((x1, x2,x3,x4,x5))
-    print x
-#	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=50)
-#	min_max_scaler = preprocessing.MinMaxScaler()
-#	X_train_minmax = min_max_scaler.fit_transform(X_train)
-#	X_test_minmax = min_max_scaler.fit_transform(X_test)
+    X = np.vstack((x1, x2,x3,x4,x5))
 
-#LinearRegr(X_train_minmax, X_test_minmax, y_train, y_test)
+	X_train, X_test, y1_train, y1_test, y2_train, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=50)
+
+    #normalizando dados
+    min_max_scaler = preprocessing.MinMaxScaler()
+	X_train_minmax = min_max_scaler.fit_transform(X_train)
+	X_test_minmax = min_max_scaler.fit_transform(X_test)
+    
+    y1_test_minmax = min_max_scaler.fit_transform(y1_test)
+    y1_train_minmax = min_max_scaler.fit_transform(y1_train)
+
+    y2_test_minmax = min_max_scaler.fit_transform(y2_test)
+    y2_train_minmax = min_max_scaler.fit_transform(y2_train)
+
+    LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+    LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 #SvrRegr(X_train_minmax, X_test_minmax, y_train, y_test)
 
 
