@@ -28,14 +28,9 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	regr = LinearRegression()
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
 	debug('Regressao Linear (MSE):' + str(metrics.mean_squared_error(y_test, y_pred)))
-	# The coefficients
-	print("Coefficients: \n", regr.coef_)
 	# The mean squared error
-	print("Mean squared error: %.2f"
-		  % metrics.mean_squared_error(y_test, y_pred))
-	# Explained variance score: 1 is perfect prediction
-	print('Variance score: %.2f' % metrics.r2_score(y_test, y_pred))
-
+	debug("Mean squared error: %.2f" + str(metrics.mean_squared_error(y_test, y_pred)))
+	debug('Variance score: %.2f' + str(metrics.r2_score(y_test, y_pred)))
 
 #=======================
 def SvrRegr(X_train, X_test, y_train, y_test):
