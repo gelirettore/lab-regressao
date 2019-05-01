@@ -66,8 +66,8 @@ def knnRegr(X_train, X_test, y_train, y_test):
 				y_pred = knn.fit(X_train,y_train).predict(X_test)
 				mse =metrics.mean_squared_error(y_test, y_pred)
 				var = metrics.r2_score(y_test, y_pred)
-				debug("KN ("+n,+","+w+","+m+"): "+ str(var))
-				debug("KN ("+n,+","+w+","+m+"): "+ str(mse))
+				debug("KN ("+str(n),+","+str(w)+","+str(m)+"): "+ str(var))
+				debug("KN ("+str(n),+","+str(w)+","+str(m)+"): "+ str(mse))
 
 #=======================
 def MlpRegr(X_train, X_test, y_train, y_test):
