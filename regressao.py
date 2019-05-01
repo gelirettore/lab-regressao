@@ -8,7 +8,7 @@ from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn import metrics
 import pandas as pd
 import numpy as np
@@ -75,10 +75,17 @@ def DsfRegr(X_train, X_test, y_train, y_test):
 
 #=======================
 def RanfForestRegr(X_train, X_test, y_train, y_test):
+	debug("Calculando Random Forest")
 	regr = RandomForestRegressor(max_depth=2, random_state=0, n_estimators=100)
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
 	debug("Random Forest: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
+#=======================
+def GradBoostRegr(X_train, X_test, y_train, y_test):
+	debug("Calculando Gradient Boosting")
+	regr = radientBoostingRegressor(n_estimators=500, max_depth=4, min_samples_split=2, learning_rate=0.01, loss='ls')
+	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	debug("Gradient Boosting: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 #=======================
 def main():
 	debug("Carregando dados")
@@ -112,9 +119,11 @@ def main():
 	#knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
-	DsfRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
-	DsfRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
-	RanfForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#DsfRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	#DsfRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#RanfForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	RanfForestRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 
 
 if __name__ == "__main__":
