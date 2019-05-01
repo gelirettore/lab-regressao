@@ -23,10 +23,10 @@ def debug(text):
 
 def Validation(regr, X_train, y_train):
 	#loo = model_selection.LeaveOneOut(len(y_train))
-	acc = model_selection.cross_val_score(regr, X_train, y_train, scoring='accuracy', cv=5)
-	fl = model_selection.cross_val_score(regr, X_train, y_train, scoring='f1_weighted', cv=5)
-	precision = model_selection.cross_val_score(regr, X_train, y_train, scoring='precision_weighted', cv=5)
-	recall = model_selection.cross_val_score(regr, X_train, y_train, scoring='recall_weighted', cv=5)
+	acc = model_selection.cross_val_score(regr, X_train, y_train, scoring='accuracy', cv=2)
+	fl = model_selection.cross_val_score(regr, X_train, y_train, scoring='f1_weighted', cv=2)
+	precision = model_selection.cross_val_score(regr, X_train, y_train, scoring='precision_weighted', cv=2)
+	recall = model_selection.cross_val_score(regr, X_train, y_train, scoring='recall_weighted', cv=2)
 	print("ACC: " + str(acc) + "; FK: "+str(fl)+"; Precision: "+str(precision)+ "; recall: "+str(recall))
 
 #======================
