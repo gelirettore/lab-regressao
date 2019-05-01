@@ -16,21 +16,26 @@ import matplotlib.pyplot as plt
 
 
 data = "usina72.csv"
+tracefile = "regressao.csv"
 kneighbors = 3
 
 def debug(text):
 	print(str(text));
 
+def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
+	div_str = ","
+	text_file = open(tracefile, "a")
+	txt = regressor + div_str + f3_mse + div_str + f3_var + div_str + f5_mse+ div_str + f5_var
+	text_file.write(txt+'\n')
+	text_file.close()
 
 #======================
 def LinearRegr(X_train, X_test, y_train, y_test):
-	debug("Calculando regressao linear")
 	regr = LinearRegression()
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
-	debug('Regressao Linear (MSE):' + str(metrics.mean_squared_error(y_test, y_pred)))
-	# The mean squared error
-	debug("Mean squared error:" + str(metrics.mean_squared_error(y_test, y_pred)))
-	debug("Variance score: " + str(metrics.r2_score(y_test, y_pred)))
+	mse =metrics.mean_squared_error(y_test, y_pred)
+	var = metrics.r2_score(y_test, y_pred)
+	return (mse, var)
 
 #=======================
 def SvrRegr(X_train, X_test, y_train, y_test):
@@ -111,8 +116,9 @@ def main():
 	y2_test_minmax = min_max_scaler.fit_transform(y2_test)
 	y2_train_minmax = min_max_scaler.fit_transform(y2_train)
 
-	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
-	LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	(mse1, var1) = LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	(mse2, var2) = LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	saveresults("linear", mse1, var1, mse2, var2)
 	#knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	#knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
