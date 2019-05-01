@@ -51,7 +51,7 @@ def knnRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando knn")
 	knn = KNeighborsRegressor(kneighbors)
 	y_pred = knn.fit(X_train,y_train).predict(X_test)
-	debug("KNN(3): " + str(metrics.mean_absolute_error(y_test, y_rbf)))
+	debug("KNN(3): " + str(metrics.mean_absolute_error(y_test, y_pred)))
 	#y_pred = knn.predict(X_test)
 	#debug("Knn: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
