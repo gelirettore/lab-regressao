@@ -75,7 +75,7 @@ def baseline_model():
 def MlpRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando MLP")
 	seed = 7
-	numpy.random.seed(seed)
+	np.random.seed(seed)
 	estimators.append(('standardize', StandardScaler()))
 	estimators.append(('mlp', KerasRegressor(build_fn=larger_model, epochs=50, batch_size=5, verbose=0)))
 	pipeline = Pipeline(estimators)
