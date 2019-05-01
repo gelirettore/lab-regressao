@@ -25,7 +25,7 @@ def debug(text):
 def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
 	div_str = ","
 	text_file = open(tracefile, "a")
-	txt = regressor + div_str + f3_mse + div_str + f3_var + div_str + f5_mse+ div_str + f5_var
+	txt = regressor + div_str + str(f3_mse) + div_str + str(f3_var) + div_str + str(f5_mse) + div_str + str(f5_var)
 	text_file.write(txt+'\n')
 	text_file.close()
 
