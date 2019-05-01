@@ -52,19 +52,18 @@ def knnRegr(X_train, X_test, y_train, y_test):
 	knn = KNeighborsRegressor(kneighbors)
 	y_pred = knn.fit(X_train,y_train).predict(X_test)
 	debug("KNN(3): " + str(metrics.mean_absolute_error(y_test, y_pred)))
-	#y_pred = knn.predict(X_test)
-	#debug("Knn: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
 #=======================
-#def MlpRegr(X_train, X_test, y_train, y_test):
-#	debug("Calculando MLP")
-#	mlp = MLPRegressor(hidden_layer_sizes=(10,),  activation='relu', solver='adam',    alpha=0.001,batch_size='auto',
-#					   learning_rate='constant', learning_rate_init=0.01, power_t=0.5, max_iter=1000, shuffle=True,
-#					   random_state=None, tol=0.0001, verbose=False, warm_start=False, momentum=0.9,
-#					   nesterovs_momentum=True, early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999,
-#					   epsilon=1e-08)
-#	mlp = mlp.fit(X_train, y_train)
-#	mlp_pred = mlp.predict(X_test)
+def MlpRegr(X_train, X_test, y_train, y_test):
+	debug("Calculando MLP")
+	mlp = MLPRegressor(hidden_layer_sizes=(10,),  activation='relu', solver='adam',    alpha=0.001,batch_size='auto',
+					   learning_rate='constant', learning_rate_init=0.01, power_t=0.5, max_iter=1000, shuffle=True,
+					   random_state=None, tol=0.0001, verbose=False, warm_start=False, momentum=0.9,
+					   nesterovs_momentum=True, early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999,
+					   epsilon=1e-08)
+	y_pred = mlp.fit(X_train, y_train).predict(X_test)
+	debug("MLP: " + str(metrics.mean_absolute_error(y_test, y_pred)))
+
 
 #=======================
 def main():
@@ -96,6 +95,9 @@ def main():
 	#SvrRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#SvrRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 	knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	MlpRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	
 
 if __name__ == "__main__":
 	main()
