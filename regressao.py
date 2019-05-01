@@ -76,30 +76,31 @@ def MlpRegr(X_train, X_test, y_train, y_test):
 
 #=======================
 def DsfRegr(X_train, X_test, y_train, y_test):
-	debug("Calculando Decision Tree")
-	splitter = ['best', 'random']
-	depht = [2,3,4,5,6,7,8,9]
-	min_mse = 9999;
-	min_par = ""
-	for s in splitter:
-		for d in depht:
-			regr = DecisionTreeRegressor(max_depth=d, splitter=s)
-			y_pred = regr.fit(X_train, y_train).predict(X_test)
-			mse =metrics.mean_squared_error(y_test, y_pred)
-			var = metrics.r2_score(y_test, y_pred)
-			debug("Decision Tree ("+str(s)+","+str(d)+")" + str(mse))
-			if mse < min_mse:
-				min_mse = mse
-				min_par = "("+str(s)+","+str(d)+")"
-	print "Valores otimos "+min_par
+	regr = DecisionTreeRegressor(max_depth=8, splitter='best')
+	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	mse =metrics.mean_squared_error(y_test, y_pred)
+	var = metrics.r2_score(y_test, y_pred)
+	return(mse, var)
 
 
 #=======================
 def RanfForestRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando Random Forest")
-	regr = RandomForestRegressor(max_depth=2, random_state=0, n_estimators=100)
-	y_pred = regr.fit(X_train, y_train).predict(X_test)
-	debug("Random Forest: " + str(metrics.mean_absolute_error(y_test, y_pred)))
+	min_mse = 9999
+	min_param = ""
+	for d in [1..9]:
+		for es in [1..150]
+			regr = RandomForestRegressor(max_depth=2, n_estimators=100)
+			y_pred = regr.fit(X_train, y_train).predict(X_test)
+			mse =metrics.mean_squared_error(y_test, y_pred)
+			var = metrics.r2_score(y_test, y_pred)
+			debug("Random Forest ("+str(d)","+str(es)+")" + str(metrics.mean_absolute_error(y_test, y_pred)))
+			if mse < min_mse:
+				min_mse = mse
+				min_param = "("+str(d)","+str(es)+")"
+	print "Valores otimos: "+min_param
+
+
 
 #=======================
 def GradBoostRegr(X_train, X_test, y_train, y_test):
@@ -138,9 +139,10 @@ def main():
 	#(mse1, var1) = knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	#(mse2, var2) = knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#saveresults("knn", mse1, var1, mse2, var2)
-	DsfRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
-	#DsfRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
-
+	#(mse1, var1) = DsfRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	#(mse2, var2) = DsfRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#saveresults("DT", mse1, var1, mse2, var2)
+	RanfForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
