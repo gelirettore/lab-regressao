@@ -6,12 +6,6 @@ from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
 from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.wrappers.scikit_learn import KerasRegressor
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import KFold, cross_val_score
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn import metrics, model_selection, linear_model
@@ -68,25 +62,12 @@ def knnRegr(X_train, X_test, y_train, y_test):
 	return(mse, var)
 
 #=======================
-def baseline_model():
-	model = Sequential()
-	model.add(Dense(13, input_dim=13, kernel_initializer='normal', activation='relu'))
-	model.add(Dense(1, kernel_initializer='normal'))
-	model.compile(loss='mean_squared_error', optimizer='adam')
-	return model
-
 def MlpRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando MLP")
-	seed = 7
-	np.random.seed(seed)
-	estimators = []
-	estimators.append(('standardize', StandardScaler()))
-	estimators.append(('mlp', KerasRegressor(build_fn=baseline_model, epochs=50, batch_size=5, verbose=0)))
-	pipeline = Pipeline(estimators)
-	kfold = KFold(n_splits=10, random_state=seed)
-	results = cross_val_score(pipeline, X_test, y_test, cv=kfold)
-	print("Larger: %.2f (%.2f) MSE" % (results.mean(), results.std()))
-#debug("MLP: " + str(metrics.mean_absolute_error(y_test, pipeline)))
+	regr = MLPRegressor(hidden_layer_sizes=(5,), activation='relu', solver='adam', learning_rate='adaptive', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
+	
+	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	debug("MLP: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
 #=======================
 def DsfRegr(X_train, X_test, y_train, y_test):
@@ -164,10 +145,10 @@ def main():
 	#(mse1, var1) = RandForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#(mse1, var1) = RandForestRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 	#saveresults("Random Forest", mse1, var1, mse2, var2)
-	#GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 
 
-	MlpRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 	#GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#GradBoostRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
