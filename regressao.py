@@ -50,7 +50,7 @@ def SvrRegr(X_train, X_test, y_train, y_test):
 def knnRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando knn")
 	knn = KNeighborsClassifier(n_neighbors= kneighbors, metric='euclidean')
-	#knn.fit(X_train,y_train)
+	knn.fit(X_train,y_train)
 	#y_pred = knn.predict(X_test)
 	#debug("Knn: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
