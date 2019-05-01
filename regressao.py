@@ -58,7 +58,7 @@ def knnRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando knn")
 	neighbor = [1, 2, 3, 5, 7]
 	weight = ['uniform', 'distance']
-	metric = ['euclidean', 'minkowski', 'manhattan', 'hebychev', 'mahalanobis', 'cosseno']
+	metric = ['euclidean', 'minkowski', 'manhattan', 'chebyshev', 'mahalanobis', 'cosseno']
 	for n in neighbor:
 		for w in weight:
 			for m in metric:
