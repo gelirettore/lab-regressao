@@ -63,11 +63,11 @@ def knnRegr(X_train, X_test, y_train, y_test):
 		for w in weight:
 			for m in metric:
 				if metric == 'mahalanobis':
-					params = "metric_params={'V': np.cov(x)}"
+					params = ", metric_params={'V': np.cov(x)}"
 				else
-					params = ""
+					params = "None"
 				
-				knn = KNeighborsRegressor(n_neighbors=n, weights=w, metric=m, n_jobs=15)
+				knn = KNeighborsRegressor(n_neighbors=n, weights=w, metric=m, n_jobs=15, metric_params=params)
 				y_pred = knn.fit(X_train,y_train).predict(X_test)
 				mse =metrics.mean_squared_error(y_test, y_pred)
 				var = metrics.r2_score(y_test, y_pred)
