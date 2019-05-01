@@ -90,11 +90,11 @@ def RanfForestRegr(X_train, X_test, y_train, y_test):
 	min_param = ""
 	for d in range(1,9):
 		for es in range(1,150):
-			regr = RandomForestRegressor(max_depth=2, n_estimators=100, n_jobs=50)
+			regr = RandomForestRegressor(max_depth=d, n_estimators=es, n_jobs=80)
 			y_pred = regr.fit(X_train, y_train).predict(X_test)
 			mse =metrics.mean_squared_error(y_test, y_pred)
 			var = metrics.r2_score(y_test, y_pred)
-			#debug("Random Forest ("+str(d)+","+str(es)+")" + str(metrics.mean_absolute_error(y_test, y_pred)))
+			debug("Random Forest ("+str(d)+","+str(es)+")" + str(metrics.mean_absolute_error(y_test, y_pred)))
 			if mse < min_mse:
 				min_mse = mse
 				min_param = "("+str(d)+","+str(es)+")"
@@ -117,7 +117,7 @@ def GradBoostRegr(X_train, X_test, y_train, y_test):
 					y_pred = regr.fit(X_train, y_train).predict(X_test)
 					mse =metrics.mean_squared_error(y_test, y_pred)
 					var = metrics.r2_score(y_test, y_pred)
-					#debug("Gradient Boosting: " + str(mse))
+					debug("Gradient Boosting: " + str(mse))
 					if mse < min_mse:
 						min_mse = mse
 						min_param = "("+str(es)+","+str(d)+","+str(s)+","+str(l)+")"
