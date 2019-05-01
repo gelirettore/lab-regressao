@@ -21,7 +21,7 @@ kneighbors = 3
 def debug(text):
 	print(str(text));
 
-def Validation(model, X_train, y_train):
+def Validation(regr, X_train, y_train):
 	#loo = model_selection.LeaveOneOut(len(y_train))
 	acc = model_selection.cross_val_score(regr, X_train, y_train, scoring='accuracy', cv=5)
 	fl = model_selection.cross_val_score(regr, X_train, y_train, scoring='f1_weighted', cv=5)
