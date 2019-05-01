@@ -90,7 +90,7 @@ def RanfForestRegr(X_train, X_test, y_train, y_test):
 	min_param = ""
 	for d in range(1,9):
 		for es in range(1,150):
-			regr = RandomForestRegressor(max_depth=2, n_estimators=100)
+			regr = RandomForestRegressor(max_depth=2, n_estimators=100, n_jobs=50)
 			y_pred = regr.fit(X_train, y_train).predict(X_test)
 			mse =metrics.mean_squared_error(y_test, y_pred)
 			var = metrics.r2_score(y_test, y_pred)
