@@ -78,7 +78,7 @@ def MlpRegr(X_train, X_test, y_train, y_test):
 def DsfRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando Decision Tree")
 	splitter = ['best', 'random']
-	depht = [2,3,4,5,6]
+	depht = [2,3,4,5,6,7,8,9]
 	min_mse = 9999;
 	min_par = ""
 	for s in splitter:
