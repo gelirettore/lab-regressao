@@ -84,7 +84,7 @@ def MlpRegr(X_train, X_test, y_train, y_test):
 	estimators.append(('mlp', KerasRegressor(build_fn=baseline_model, epochs=50, batch_size=5, verbose=0)))
 	pipeline = Pipeline(estimators)
 	kfold = KFold(n_splits=10, random_state=seed)
-	results = cross_val_score(pipeline, X, Y, cv=kfold)
+	results = cross_val_score(pipeline, X_test, y_test, cv=kfold)
 	print("Larger: %.2f (%.2f) MSE" % (results.mean(), results.std()))
 #debug("MLP: " + str(metrics.mean_absolute_error(y_test, pipeline)))
 
