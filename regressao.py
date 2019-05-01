@@ -59,6 +59,8 @@ def knnRegr(X_train, X_test, y_train, y_test):
 	neighbor = [1, 2, 3, 5, 7]
 	weight = ['uniform', 'distance']
 	metric = ['euclidean', 'minkowski', 'manhattan', 'chebyshev']
+	menor_mse = 999999
+	menor_param = ""
 	for n in neighbor:
 		for w in weight:
 			for m in metric:
@@ -66,9 +68,13 @@ def knnRegr(X_train, X_test, y_train, y_test):
 				y_pred = knn.fit(X_train,y_train).predict(X_test)
 				mse =metrics.mean_squared_error(y_test, y_pred)
 				var = metrics.r2_score(y_test, y_pred)
+				if mse < menor_mse:
+					menor_mse = mse
+					menor_param = "("+str(n)+","+str(w)+","+str(m)+")"
 				print("KN ("+str(n)+","+str(w)+","+str(m)+"): "+ str(var))
 				print("KN ("+str(n)+","+str(w)+","+str(m)+"): "+ str(mse))
 
+	print "Valores otimos: "+menor_param
 #=======================
 def MlpRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando MLP")
