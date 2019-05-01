@@ -113,7 +113,7 @@ def GradBoostRegr(X_train, X_test, y_train, y_test):
 		for d in range(1,15):
 			for s in range(2,10):
 				for l in loss:
-					es = es * 50:
+					es = es * 50
 					regr = GradientBoostingRegressor(n_estimators=es, max_depth=d, min_samples_split=s, learning_rate=0.01, loss=l, criterion='mse')
 					y_pred = regr.fit(X_train, y_train).predict(X_test)
 					mse =metrics.mean_squared_error(y_test, y_pred)
