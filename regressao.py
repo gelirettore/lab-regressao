@@ -56,9 +56,18 @@ def SvrRegr(X_train, X_test, y_train, y_test):
 #=======================
 def knnRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando knn")
-	knn = KNeighborsRegressor(kneighbors)
-	y_pred = knn.fit(X_train,y_train).predict(X_test)
-	debug("KNN(3): " + str(metrics.mean_absolute_error(y_test, y_pred)))
+	neighbor = [1, 2, 3, 5, 7]
+	weight = ['uniform', 'distance']
+	metric = ['euclidean', 'minkowski', 'manhattan', 'hebychev', 'mahalanobis', 'cosseno']
+	for n in neighbor:
+		for w in weight:
+			for m in metric:
+				knn = KNeighborsRegressor(n_neighbors=n, weights=w, metric=’m, n_jobs=15)
+				y_pred = knn.fit(X_train,y_train).predict(X_test)
+				mse =metrics.mean_squared_error(y_test, y_pred)
+				var = metrics.r2_score(y_test, y_pred)
+				debug("KN ("+n,+","+w+","+m+"): "+ str(var))
+				debug("KN ("+n,+","+w+","+m+"): "+ str(mse))
 
 #=======================
 def MlpRegr(X_train, X_test, y_train, y_test):
@@ -116,10 +125,10 @@ def main():
 	y2_test_minmax = min_max_scaler.fit_transform(y2_test)
 	y2_train_minmax = min_max_scaler.fit_transform(y2_train)
 
-	(mse1, var1) = LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
-	(mse2, var2) = LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
-	saveresults("linear", mse1, var1, mse2, var2)
-	#knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	#(mse1, var1) = LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	#(mse2, var2) = LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	#saveresults("linear", mse1, var1, mse2, var2)
+	knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	#knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
