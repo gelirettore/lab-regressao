@@ -94,10 +94,10 @@ def RanfForestRegr(X_train, X_test, y_train, y_test):
 			y_pred = regr.fit(X_train, y_train).predict(X_test)
 			mse =metrics.mean_squared_error(y_test, y_pred)
 			var = metrics.r2_score(y_test, y_pred)
-			debug("Random Forest ("+str(d)","+str(es)+")" + str(metrics.mean_absolute_error(y_test, y_pred)))
+			debug("Random Forest ("+str(d)+","+str(es)+")" + str(metrics.mean_absolute_error(y_test, y_pred)))
 			if mse < min_mse:
 				min_mse = mse
-				min_param = "("+str(d)","+str(es)+")"
+				min_param = "("+str(d)+","+str(es)+")"
 	print "Valores otimos: "+min_param
 
 
