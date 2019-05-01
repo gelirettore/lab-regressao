@@ -7,6 +7,7 @@ from sklearn import preprocessing
 from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
+from sklearn.tree import DecisionTreeRegressor
 from sklearn import metrics
 import pandas as pd
 import numpy as np
@@ -64,6 +65,12 @@ def MlpRegr(X_train, X_test, y_train, y_test):
 	y_pred = mlp.fit(X_train, y_train).predict(X_test)
 	debug("MLP: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
+#=======================
+def DsfRegr(X_train, X_test, y_train, y_test):
+	debug("Calculando Decision Tree")
+	regr = DecisionTreeRegressor(max_depth=2)
+	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	debug("Decision Tree: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
 #=======================
 def main():
@@ -90,13 +97,15 @@ def main():
 	y2_test_minmax = min_max_scaler.fit_transform(y2_test)
 	y2_train_minmax = min_max_scaler.fit_transform(y2_train)
 
-	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
-	LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	#LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	#LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#SvrRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#SvrRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
-	knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
-	knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
-	MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	#knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	#knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	DsfRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 
 
 if __name__ == "__main__":
