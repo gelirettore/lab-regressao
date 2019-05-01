@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
 from sklearn.svm import SVR
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn import metrics
 import pandas as pd
@@ -49,8 +49,9 @@ def SvrRegr(X_train, X_test, y_train, y_test):
 #=======================
 def knnRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando knn")
-	knn = KNeighborsClassifier(n_neighbors= kneighbors, metric='euclidean')
-	knn.fit(X_train,y_train)
+	knn = KNeighborsRegressor(kneighbors)
+	y_pred = knn.fit(X_train,y_train).predict(X_test)
+	debug("KNN(3): " + str(metrics.mean_absolute_error(y_test, y_rbf)))
 	#y_pred = knn.predict(X_test)
 	#debug("Knn: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
