@@ -83,7 +83,7 @@ def RanfForestRegr(X_train, X_test, y_train, y_test):
 #=======================
 def GradBoostRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando Gradient Boosting")
-	regr = radientBoostingRegressor(n_estimators=500, max_depth=4, min_samples_split=2, learning_rate=0.01, loss='ls')
+	regr = GradientBoostingRegressor(n_estimators=500, max_depth=4, min_samples_split=2, learning_rate=0.01, loss='ls')
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
 	debug("Gradient Boosting: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 #=======================
