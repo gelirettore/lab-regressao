@@ -81,7 +81,7 @@ def MlpRegr(X_train, X_test, y_train, y_test):
 	np.random.seed(seed)
 	estimators = []
 	estimators.append(('standardize', StandardScaler()))
-	estimators.append(('mlp', KerasRegressor(build_fn=larger_model, epochs=50, batch_size=5, verbose=0)))
+	estimators.append(('mlp', KerasRegressor(build_fn=baseline_model, epochs=50, batch_size=5, verbose=0)))
 	pipeline = Pipeline(estimators)
 	kfold = KFold(n_splits=10, random_state=seed)
 	results = cross_val_score(pipeline, X, Y, cv=kfold)
