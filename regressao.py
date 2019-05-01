@@ -65,15 +65,24 @@ def knnRegr(X_train, X_test, y_train, y_test):
 	return(mse, var)
 
 #=======================
-def MlpRegr(X_train, X_test, y_train, y_test):
-	debug("Calculando MLP")
+def baseline_model():
 	model = Sequential()
 	model.add(Dense(13, input_dim=13, kernel_initializer='normal', activation='relu'))
 	model.add(Dense(1, kernel_initializer='normal'))
 	model.compile(loss='mean_squared_error', optimizer='adam')
-	
-	y_pred = model.fit(X_train, y_train).predict(X_test)
-	debug("MLP: " + str(metrics.mean_absolute_error(y_test, y_pred)))
+	return model
+
+def MlpRegr(X_train, X_test, y_train, y_test):
+	debug("Calculando MLP")
+	seed = 7
+	numpy.random.seed(seed)
+	estimators.append(('standardize', StandardScaler()))
+	estimators.append(('mlp', KerasRegressor(build_fn=larger_model, epochs=50, batch_size=5, verbose=0)))
+	pipeline = Pipeline(estimators)
+	kfold = KFold(n_splits=10, random_state=seed)
+	results = cross_val_score(pipeline, X, Y, cv=kfold)
+	print("Larger: %.2f (%.2f) MSE" % (results.mean(), results.std()))
+#debug("MLP: " + str(metrics.mean_absolute_error(y_test, pipeline)))
 
 #=======================
 def DsfRegr(X_train, X_test, y_train, y_test):
@@ -99,10 +108,10 @@ def GradBoostRegr(X_train, X_test, y_train, y_test):
 	loss = ['ls', 'lad', 'huber', 'quantile']
 	min_mse = 9999
 	min_param = ""
-	for es in range(1,15):
+	for es in range(1,4):
 		es = es * 50
-		for d in range(1,15):
-			for s in range(2,10):
+		for d in range(1,10):
+			for s in range(2,8):
 				for l in loss:
 					regr = GradientBoostingRegressor(n_estimators=es, max_depth=d, min_samples_split=s, learning_rate=0.01, loss=l, criterion='mse')
 					y_pred = regr.fit(X_train, y_train).predict(X_test)
