@@ -28,7 +28,7 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	regr = LinearRegression()
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
 	debug('Regressao Linear (MSE):' + str(metrics.mean_squared_error(y_test, y_pred)))
-	score = model_selection.cross_val_score(regr, X_train, y_train, scoring='mean_squared_error', cv=5)
+	score = model_selection.cross_val_score(regr, X_train, y_train, scoring='accuracy', cv=5)
 	debug('Regressao Linear (CV):' + str(metrics.mean_squared_error(y_test, y_pred)))
 
 #=======================
