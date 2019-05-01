@@ -9,7 +9,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn import metrics
+from sklearn import metrics, cross_validation, linear_model
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,16 +21,15 @@ kneighbors = 3
 def debug(text):
 	print(str(text));
 
+
 #======================
 def LinearRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando regressao linear")
-	#Cria modelo
 	regr = LinearRegression()
-	
-	#Treina modelo
-	regr.fit(X_train, y_train)
-	y_pred = regr.predict(X_test)
-	debug('Regressao Linear (MSE):' + str(metrics.mean_absolute_error(y_test, y_pred)))
+	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	debug('Regressao Linear (MSE):' + str(metrics.mean_squared_error(y_test, y_pred)))
+	score = cross_validation.cross_val_score(regr, X_train, y_train, scoring='mean_squared_error', cv=5)
+	debug('Regressao Linear (CV):' + str(metrics.mean_squared_error(y_test, y_pred)))
 
 #=======================
 def SvrRegr(X_train, X_test, y_train, y_test):
@@ -111,10 +110,8 @@ def main():
 	y2_test_minmax = min_max_scaler.fit_transform(y2_test)
 	y2_train_minmax = min_max_scaler.fit_transform(y2_train)
 
-	#LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	#LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
-	#SvrRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
-	#SvrRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 	#knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	#knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
@@ -122,8 +119,11 @@ def main():
 	#DsfRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 	#DsfRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#RanfForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
-	RanfForestRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
-	GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#RanfForestRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	#GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#GradBoostRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	#SvrRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#SvrRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 
 
 if __name__ == "__main__":
