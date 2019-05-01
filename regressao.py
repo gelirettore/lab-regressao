@@ -8,6 +8,7 @@ from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn import metrics
 import pandas as pd
 import numpy as np
@@ -73,6 +74,12 @@ def DsfRegr(X_train, X_test, y_train, y_test):
 	debug("Decision Tree: " + str(metrics.mean_absolute_error(y_test, y_pred)))
 
 #=======================
+def RanfForestRegr(X_train, X_test, y_train, y_test):
+	regr = RandomForestRegressor(max_depth=2, random_state=0, n_estimators=100)
+	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	debug("Random Forest: " + str(metrics.mean_absolute_error(y_test, y_pred)))
+
+#=======================
 def main():
 	debug("Carregando dados")
 	#carrega dados e divide
@@ -106,6 +113,8 @@ def main():
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 	DsfRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	DsfRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	RanfForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 
 
 if __name__ == "__main__":
