@@ -9,7 +9,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn import metrics, cross_validation, linear_model
+from sklearn import metrics, model_selection
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -28,7 +28,7 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	regr = LinearRegression()
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
 	debug('Regressao Linear (MSE):' + str(metrics.mean_squared_error(y_test, y_pred)))
-	score = cross_validation.cross_val_score(regr, X_train, y_train, scoring='mean_squared_error', cv=5)
+	score = model_selection.cross_val_score(regr, X_train, y_train, scoring='mean_squared_error', cv=5)
 	debug('Regressao Linear (CV):' + str(metrics.mean_squared_error(y_test, y_pred)))
 
 #=======================
