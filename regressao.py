@@ -21,13 +21,6 @@ kneighbors = 3
 def debug(text):
 	print(str(text));
 
-def Validation(regr, X_train, y_train):
-	#loo = model_selection.LeaveOneOut(len(y_train))
-	acc = model_selection.cross_val_score(regr, X_train, y_train, scoring='accuracy', cv=2)
-	fl = model_selection.cross_val_score(regr, X_train, y_train, scoring='f1_weighted', cv=2)
-	precision = model_selection.cross_val_score(regr, X_train, y_train, scoring='precision_weighted', cv=2)
-	recall = model_selection.cross_val_score(regr, X_train, y_train, scoring='recall_weighted', cv=2)
-	print("ACC: " + str(acc) + "; FK: "+str(fl)+"; Precision: "+str(precision)+ "; recall: "+str(recall))
 
 #======================
 def LinearRegr(X_train, X_test, y_train, y_test):
@@ -35,7 +28,14 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	regr = LinearRegression()
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
 	debug('Regressao Linear (MSE):' + str(metrics.mean_squared_error(y_test, y_pred)))
-	Validation(regr, X_train, y_train)
+	# The coefficients
+	print('Coefficients: \n', regr.coef_)
+	# The mean squared error
+	print("Mean squared error: %.2f"
+		  % metrics.mean_squared_error(diabetes_y_test, diabetes_y_pred))
+	# Explained variance score: 1 is perfect prediction
+	print('Variance score: %.2f' % metrics.r2_score(diabetes_y_test, diabetes_y_pred))
+	
 
 #=======================
 def SvrRegr(X_train, X_test, y_train, y_test):
