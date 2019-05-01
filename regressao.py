@@ -29,7 +29,7 @@ def LinearRegr(X_train, X_test, y_train, y_test):
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
 	debug('Regressao Linear (MSE):' + str(metrics.mean_squared_error(y_test, y_pred)))
 	# The coefficients
-	print('Coefficients: \n', regr.coef_)
+	print("Coefficients: \n", regr.coef_)
 	# The mean squared error
 	print("Mean squared error: %.2f"
 		  % metrics.mean_squared_error(y_test, y_pred))
@@ -117,7 +117,7 @@ def main():
 	y2_train_minmax = min_max_scaler.fit_transform(y2_train)
 
 	LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
-	#LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
 	#knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
