@@ -94,20 +94,36 @@ def RanfForestRegr(X_train, X_test, y_train, y_test):
 			y_pred = regr.fit(X_train, y_train).predict(X_test)
 			mse =metrics.mean_squared_error(y_test, y_pred)
 			var = metrics.r2_score(y_test, y_pred)
-			debug("Random Forest ("+str(d)+","+str(es)+")" + str(metrics.mean_absolute_error(y_test, y_pred)))
+			#debug("Random Forest ("+str(d)+","+str(es)+")" + str(metrics.mean_absolute_error(y_test, y_pred)))
+			print "."
 			if mse < min_mse:
 				min_mse = mse
 				min_param = "("+str(d)+","+str(es)+")"
-	print "Valores otimos: "+min_param
+	print "Valores otimos: "+min_param+" mse: "+ str(min_mse)
 
 
 
 #=======================
 def GradBoostRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando Gradient Boosting")
-	regr = GradientBoostingRegressor(n_estimators=500, max_depth=4, min_samples_split=2, learning_rate=0.01, loss='ls')
-	y_pred = regr.fit(X_train, y_train).predict(X_test)
-	debug("Gradient Boosting: " + str(metrics.mean_absolute_error(y_test, y_pred)))
+	loss = ['ls', 'lad', 'huber', 'quantile']
+	min_mse = 9999
+	min_param = ""
+	for es in range(1,15):
+		for d in range(1,15):
+			for s in range(2,10):
+				for l in loss:
+					es = es * 50:
+					regr = GradientBoostingRegressor(n_estimators=es, max_depth=d, min_samples_split=s, learning_rate=0.01, loss=l, criterion='mse')
+					y_pred = regr.fit(X_train, y_train).predict(X_test)
+					mse =metrics.mean_squared_error(y_test, y_pred)
+					var = metrics.r2_score(y_test, y_pred)
+					#debug("Gradient Boosting: " + str(mse))
+					print "."
+					if mse < min_mse:
+						min_mse = mse
+						min_param = "("+str(es)+","+str(d)+","+str(s)+","+str(l)+")"
+	print "Valores otimos: "+min_param+ " mse: "+ str(mse)
 #=======================
 def main():
 	debug("Carregando dados")
@@ -143,6 +159,7 @@ def main():
 	#(mse2, var2) = DsfRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#saveresults("DT", mse1, var1, mse2, var2)
 	RanfForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
