@@ -58,14 +58,11 @@ def knnRegr(X_train, X_test, y_train, y_test):
 	debug("Calculando knn")
 	neighbor = [1, 2, 3, 5, 7]
 	weight = ['uniform', 'distance']
-	metric = ['euclidean', 'minkowski', 'manhattan', 'chebyshev', 'mahalanobis']
+	metric = ['euclidean', 'minkowski', 'manhattan', 'chebyshev']
 	for n in neighbor:
 		for w in weight:
 			for m in metric:
-				if metric == 'mahalanobis':
-					knn = KNeighborsRegressor(n_neighbors=n, weights=w, metric=m, n_jobs=15, metric_params={'V': np.cov(x)})
-				else:
-					knn = KNeighborsRegressor(n_neighbors=n, weights=w, metric=m, n_jobs=15)
+				knn = KNeighborsRegressor(n_neighbors=n, weights=w, metric=m, n_jobs=15)
 				y_pred = knn.fit(X_train,y_train).predict(X_test)
 				mse =metrics.mean_squared_error(y_test, y_pred)
 				var = metrics.r2_score(y_test, y_pred)
