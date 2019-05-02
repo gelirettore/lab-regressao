@@ -103,13 +103,18 @@ def GradBoostRegr(X_train, X_test, y_train, y_test):
 def main():
 	debug("Carregando dados")
 	#carrega dados e divide
-
+	
 	dados = pd.read_csv(data)
 	y1 = dados['f3'].values.reshape(-1,1)
 	y2 = dados['f4'].values.reshape(-1,1)
 
+<<<<<<< HEAD
 	#f4, f5,f6,f9,f10,f11,f12  dsds
 	X = dados[['f4','f5','f6','f9','f10','f11','f12']].values
+=======
+	#f4
+	X = dados[['f7']].values
+>>>>>>> 076543a27d12d80b7f8f2d6c7946ab14ef02cfeb
 	
 	X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
 	X_train, X_val, y1_train, y1_val, y2_train, y2_val = train_test_split(X_t, y1_t, y2_t, test_size=0.3, random_state=48)
@@ -122,7 +127,7 @@ def main():
 	X_train = min_max_scaler.fit_transform(X_train)
 	X_test = min_max_scaler.fit_transform(X_test)
 	X_val = min_max_scaler.fit_transform(X_val)
-			
+	
 	y1_test = min_max_scaler.fit_transform(y1_test)
 	y1_train = min_max_scaler.fit_transform(y1_train)
 	y1_val = min_max_scaler.fit_transform(y1_val)
@@ -130,8 +135,8 @@ def main():
 	y2_test = min_max_scaler.fit_transform(y2_test)
 	y2_train = min_max_scaler.fit_transform(y2_train)
 	y2_val = min_max_scaler.fit_transform(y2_val)
-
-
+	
+	
 	(mse1) = LinearRegr(X_train, X_val, y1_train, y1_val)
 	#(mse2, var2) = LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#saveresults("Linear Regression", mse1, var1, mse2, var2)
