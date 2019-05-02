@@ -108,13 +108,9 @@ def main():
 	y1 = dados['f3'].values.reshape(-1,1)
 	y2 = dados['f4'].values.reshape(-1,1)
 
-<<<<<<< HEAD
 	#f4, f5,f6,f9,f10,f11,f12  dsds
 	X = dados[['f4','f5','f6','f9','f10','f11','f12']].values
-=======
-	#f4
-	X = dados[['f7']].values
->>>>>>> 076543a27d12d80b7f8f2d6c7946ab14ef02cfeb
+
 	
 	X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
 	X_train, X_val, y1_train, y1_val, y2_train, y2_val = train_test_split(X_t, y1_t, y2_t, test_size=0.3, random_state=48)
