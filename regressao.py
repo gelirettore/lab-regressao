@@ -18,9 +18,6 @@ data = "usina72.csv"
 tracefile = "regressao.csv"
 kneighbors = 3
 jobs = 90
-X_train = X_test = {}
-y1_train = y1_test = y2_train = y2_test = {}
-y1_val = y1_val = y2_val = y2_val = {}
 
 
 def debug(text):
@@ -34,9 +31,10 @@ def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
 	text_file.close()
 
 #======================
-def LinearRegr(X_train, X_test, y_train, y_test):
+def LinearRegr(X_train, X_val, y_train, y_val):
 	regr = LinearRegression()
-	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	y_pred = regr.fit(X_train, y_train).predict(X_val)
+	print y_pred
 	mse =metrics.mean_squared_error(y_test, y_pred)
 	var = metrics.r2_score(y_test, y_pred)
 	return (mse, var)
@@ -111,23 +109,28 @@ def main():
 	
 	X = dados[['f4','f6','f9','f10','f11']].values
 	
-	X_train, X_test, y1_train, y1_test, y2_train, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
+	X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
+	X_train, X_val, y1_train, y1_val, y2_train, y2_val = train_test_split(X_t, y1_t, y2_t, test_size=0.3, random_state=48)
 	#criar vetores de teste, mudar teste para validacao
 	#nao usar cross validation
 	#
 	
 	#normalizando dados
 	min_max_scaler = preprocessing.MinMaxScaler()
-	X_train_minmax = min_max_scaler.fit_transform(X_train)
-	X_test_minmax = min_max_scaler.fit_transform(X_test)
+	X_train = min_max_scaler.fit_transform(X_train)
+	X_test = min_max_scaler.fit_transform(X_test)
+	X_val = min_max_scaler.fit_transform(X_val)
 			
-	y1_test_minmax = min_max_scaler.fit_transform(y1_test)
-	y1_train_minmax = min_max_scaler.fit_transform(y1_train)
+	y1_test = min_max_scaler.fit_transform(y1_test)
+	y1_train = min_max_scaler.fit_transform(y1_train)
+	y1_val = min_max_scaler.fit_transform(y1_val)
+	
+	y2_test = min_max_scaler.fit_transform(y2_test)
+	y2_train = min_max_scaler.fit_transform(y2_train)
+	y2_val = min_max_scaler.fit_transform(y2_val)
 
-	y2_test_minmax = min_max_scaler.fit_transform(y2_test)
-	y2_train_minmax = min_max_scaler.fit_transform(y2_train)
 
-	#(mse1, var1) = LinearRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
+	(mse1, var1) = LinearRegr(X_train, X_val, y1_train, y1_val)
 	#(mse2, var2) = LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#saveresults("Linear Regression", mse1, var1, mse2, var2)
 	#(mse1, var1) = knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
