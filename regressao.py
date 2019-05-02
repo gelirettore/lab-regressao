@@ -35,7 +35,7 @@ def LinearRegr(X_train, X_val, y_train, y_val):
 	regr = LinearRegression()
 	y_pred = regr.fit(X_train, y_train).predict(X_val)
 	error = y_pred - y_val
-	np.savetxt('test.csv', error, delimiter=',', header='error')
+	np.savetxt('test.csv', error, delimiter=',', header='error', comments='')
 	mse =metrics.mean_squared_error(y_val, y_pred)
 	var = metrics.r2_score(y_val, y_pred)
 	print mse
@@ -110,7 +110,7 @@ def main():
 	y2 = dados['f5'].values.reshape(-1,1)
 
 	
-	X = dados[['f4']].values
+	X = dados[['f4'],['f5']].values
 	
 	X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
 	X_train, X_val, y1_train, y1_val, y2_train, y2_val = train_test_split(X_t, y1_t, y2_t, test_size=0.3, random_state=48)
