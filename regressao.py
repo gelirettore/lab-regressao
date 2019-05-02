@@ -34,7 +34,8 @@ def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
 def LinearRegr(X_train, X_val, y_train, y_val):
 	regr = LinearRegression()
 	y_pred = regr.fit(X_train, y_train).predict(X_val)
-	print y_pred
+	error = y_pred - y_val
+	print error
 	mse =metrics.mean_squared_error(y_test, y_pred)
 	var = metrics.r2_score(y_test, y_pred)
 	return (mse, var)
