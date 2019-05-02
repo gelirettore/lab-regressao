@@ -18,6 +18,10 @@ data = "usina72.csv"
 tracefile = "regressao.csv"
 kneighbors = 3
 jobs = 90
+X_train = X_test = {}
+y1_train = y1_test = y2_train = y2_test = {}
+y1_val = y1_val = y2_val = y2_val = {}
+
 
 def debug(text):
 	print(str(text));
@@ -53,6 +57,7 @@ def SvrRegr(X_train, X_test, y_train, y_test):
 	debug("SVR(rbf): " + str(metrics.mean_absolute_error(y_test, y_rbf)))
 	debug("SVR(linear): " + str(metrics.mean_absolute_error(y_test, y_lin)))
 	debug("SVR(poly): " + str(metrics.mean_absolute_error(y_test, y_poly)))
+
 #=======================
 def knnRegr(X_train, X_test, y_train, y_test):
 	knn = KNeighborsRegressor(n_neighbors=5, weights='distance', metric='manhattan', n_jobs=jobs)
@@ -80,7 +85,7 @@ def DsfRegr(X_train, X_test, y_train, y_test):
 
 #=======================
 def RandForestRegr(X_train, X_test, y_train, y_test):
-	regr = RandomForestRegressor(max_depth=8, n_estimators=71, n_jobs=jobs)
+	regr = RandomForestRegressor(max_depth=2, n_estimators=100, n_jobs=jobs)
 	y_pred = regr.fit(X_train, y_train).predict(X_test)
 	mse =metrics.mean_squared_error(y_test, y_pred)
 	var = metrics.r2_score(y_test, y_pred)
@@ -89,24 +94,10 @@ def RandForestRegr(X_train, X_test, y_train, y_test):
 
 #=======================
 def GradBoostRegr(X_train, X_test, y_train, y_test):
-	debug("Calculando Gradient Boosting")
-	loss = ['ls', 'lad', 'huber', 'quantile']
-	min_mse = 9999
-	min_param = ""
-	for es in range(1,4):
-		es = es * 50
-		for d in range(1,10):
-			for s in range(2,8):
-				for l in loss:
-					regr = GradientBoostingRegressor(n_estimators=es, max_depth=d, min_samples_split=s, learning_rate=0.01, loss=l, criterion='mse')
-					y_pred = regr.fit(X_train, y_train).predict(X_test)
-					mse =metrics.mean_squared_error(y_test, y_pred)
-					var = metrics.r2_score(y_test, y_pred)
-					debug("Gradient Boosting: ("+str(es)+","+str(d)+","+str(s)+","+str(l)+")" + str(mse))
-					if mse < min_mse:
-						min_mse = mse
-						min_param = "("+str(es)+","+str(d)+","+str(s)+","+str(l)+")"
-	print "Valores otimos: "+min_param+ " mse: "+ str(min_mse)
+	regr = GradientBoostingRegressor(n_estimators=100, max_features='log2', min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
+	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	mse =metrics.mean_squared_error(y_test, y_pred)
+	var = metrics.r2_score(y_test, y_pred)
 
 #=======================
 def main():
@@ -121,6 +112,9 @@ def main():
 	X = dados[['f4','f6','f9','f10','f11']].values
 	
 	X_train, X_test, y1_train, y1_test, y2_train, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
+	#criar vetores de teste, mudar teste para validação
+	#nao usar cross validation
+	#
 	
 	#normalizando dados
 	min_max_scaler = preprocessing.MinMaxScaler()
@@ -145,7 +139,7 @@ def main():
 	#(mse1, var1) = RandForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 	#(mse1, var1) = RandForestRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 	#saveresults("Random Forest", mse1, var1, mse2, var2)
-	GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
 
 
 	#MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
