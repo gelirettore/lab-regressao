@@ -112,7 +112,7 @@ def main():
 	X = dados[['f4','f6','f9','f10','f11']].values
 	
 	X_train, X_test, y1_train, y1_test, y2_train, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
-	#criar vetores de teste, mudar teste para validação
+	#criar vetores de teste, mudar teste para validacao
 	#nao usar cross validation
 	#
 	
