@@ -7,6 +7,7 @@ from sklearn import preprocessing
 from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.neural_network import MLPRegressor
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn import metrics, model_selection, linear_model
 import pandas as pd
