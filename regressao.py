@@ -49,7 +49,7 @@ def debug(text):
 def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var, test1, test2):
 	div_str = ","
 	text_file = open(tracefile, "a")
-	txt = regressor + div_str + str(f3_mse) + div_str + str(f3_var) + div_str + str(f5_mse) + div_str + str(f5_var)
+	txt = regressor + div_str + str(f3_mse) + div_str + str(f3_var) + div_str + str(f5_mse) + div_str + str(f5_var) + div_str + str(test1) + div_str + str(test2)
 	text_file.write(txt+'\n')
 	text_file.close()
 
@@ -116,10 +116,13 @@ def MlpRegr():
 #=======================
 def DTRegr():
 	regr = DecisionTreeRegressor(max_depth=3, splitter='best')
+	debug("predicting...")
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
+	debug("testing...")
 	(test1) = Test(regr, y1_train,  y1_test, 'dt-test1')
 	(test2) = Test(regr, y2_train,  y2_test, 'dt-test2')
+	debug("saving results...")
 	saveresults("Decision Tree", mse1, var1, mse2, var2, test1, test2)
 	debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
