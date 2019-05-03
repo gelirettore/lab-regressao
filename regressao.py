@@ -92,7 +92,7 @@ def knnRegr():
 #=======================
 def MlpRegr():
 	#regr = MLPRegressor(hidden_layer_sizes=(5,3), activation='relu', solver='adam', learning_rate='adaptive', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
-	regr = MLPRegressor(hidden_layer_sizes=(5,3), activation='logistic', solver='adam', learning_rate='invscaling')
+	regr = MLPRegressor(hidden_layer_sizes=(5,3), activation='logistic', solver='adam', learning_rate='invscaling', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'mlp1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'mlp2')
 	saveresults("MLP", mse1, var1, mse2, var2)
@@ -101,7 +101,7 @@ def MlpRegr():
 
 #=======================
 def DTRegr():
-	regr = DecisionTreeRegressor(max_depth=8, splitter='best')
+	regr = DecisionTreeRegressor(max_depth=2, splitter='best')
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
 	saveresults("Decision Tree", mse1, var1, mse2, var2)
