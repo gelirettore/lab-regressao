@@ -136,7 +136,7 @@ def main():
 	y2_val = min_max_scaler.fit_transform(y2_val)
 	
 	
-	(mse1) = LinearRegr(X_train, X_val, y1_train, y1_val)
+	(mse1, var1) = LinearRegr(X_train, X_val, y1_train, y1_val)
 	#(mse2, var2) = LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
 	#saveresults("Linear Regression", mse1, var1, mse2, var2)
 	#(mse1, var1) = knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
