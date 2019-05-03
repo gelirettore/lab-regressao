@@ -140,29 +140,21 @@ def main(option):
 	y2_train = min_max_scaler.fit_transform(y2_train)
 	y2_val = min_max_scaler.fit_transform(y2_val)
 	
-	switch(option) {
-		case 'linear':
+	if option == 'linear':
 			LinearRegr()
-			break;
-		case 'knn':
+	elif  option == 'knn':
 			knnRegr()
-			break;
-		case 'dt':
+	elif option == 'dt':
 			DTRegr()
-			break;
-		case 'rf':
+	elif option == 'rf':
 			RandForestRegr()
-			break;
-		case 'gb':
+	elif option == 'gb':
 			GradBoostRegr()
-			break;
-		case 'mlp';
+	elif option == 'mlp';
 			MlpRegr()
-			break;
-		case 'svr':
+	elif option == 'svr':
 			SvrRegr()
-			break;
-		case 'all:
+	elif option == 'all:
 			LinearRegr()
 			knnRegr()
 			DTRegr()
@@ -170,11 +162,8 @@ def main(option):
 			GradBoostRegr()
 			MlpRegr()
 			SvrRegr()
-			break;
-		default:
+	else:
 			sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all>")
-			break;
-	}
 
 
 
