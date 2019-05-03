@@ -31,7 +31,7 @@ def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
 	text_file.close()
 
 #====================== PREDICT ==================
-def Predict(model, X_train, X_val, y_train, y_val)
+def Predict(model, X_train, X_val, y_train, y_val):
 	y_pred = model.fit(X_train,y_train).predict(X_val)
 	error = y_pred - y_val
 	np.savetxt('knn.csv', error, delimiter=',', header='error', comments='')
