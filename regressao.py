@@ -100,8 +100,8 @@ def MlpRegr():
 
 
 #=======================
-def DTRegr():
-	regr = DecisionTreeRegressor(max_depth=2, splitter='best')
+def DTRegr(d, s):
+	regr = DecisionTreeRegressor(max_depth=d, splitter=s)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
 	saveresults("Decision Tree", mse1, var1, mse2, var2)
@@ -135,7 +135,7 @@ def main(option):
 	elif  option == 'knn':
 			knnRegr()
 	elif option == 'dt':
-			DTRegr()
+			DTRegr(sys.argv[2], sys.argv[3])
 	elif option == 'rf':
 			RandForestRegr()
 	elif option == 'gb':
@@ -158,6 +158,6 @@ def main(option):
 
 
 if __name__ == "__main__":
-	if len(sys.argv) != 2:
+	if len(sys.argv) < 2:
 		sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all>")
 	main(sys.argv[1])
