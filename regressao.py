@@ -62,7 +62,7 @@ def Predict(model, X_train, X_val, y_train, y_val, file):
 	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
 	return (mse, var)
 
-def Test(model, y_train, y_test file):
+def Test(model, y_train, y_test, file):
 	y_pred = model.fit(X_train,y_train).predict(X_test)
 	error = y_pred - y_test
 	np.savetxt(file + ".csv", error, delimiter=',', header='error', comments='')
