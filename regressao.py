@@ -93,7 +93,7 @@ def SvrRegr():
 
 #=======================
 def knnRegr():
-	regr = KNeighborsRegressor(n_neighbors=5, weights='heighbor, weight e metric', metric='manhattan', n_jobs=jobs)
+	regr = KNeighborsRegressor(n_neighbors=5, weights='distance', metric='manhattan', n_jobs=jobs)
 	(mse1, var1, model1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'knn1')
 	(mse2, var2, model2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'knn2')
 	(test1) = Test(model1, y1_train,  y1_test, 'knn-test1')
