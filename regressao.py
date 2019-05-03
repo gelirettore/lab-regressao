@@ -46,8 +46,7 @@ y2_val = min_max_scaler.fit_transform(y2_val)
 def debug(text):
 	print(str(text));
 
-def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
-	return;
+def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var, mse_test, var_test):
 	div_str = ","
 	text_file = open(tracefile, "a")
 	txt = regressor + div_str + str(f3_mse) + div_str + str(f3_var) + div_str + str(f5_mse) + div_str + str(f5_var)
@@ -63,12 +62,21 @@ def Predict(model, X_train, X_val, y_train, y_val, file):
 	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
 	return (mse, var)
 
+def Test(model, file):
+	y_pred = model.fit(X_train,y_train).predict(X_test)
+	error = y_pred - y_test
+	np.savetxt(file + ".csv", error, delimiter=',', header='error', comments='')
+	mse = metrics.mean_squared_error(y_val, y_pred)
+	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
+	return (mse, var)
+
 #======================
 def LinearRegr():
 	regr = LinearRegression()
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'lr1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'lr2')
-	saveresults("Linear Regression", mse1, var1, mse2, var2)
+	(mse_test, var_test) = Test(regr, 'lr-test')
+	saveresults("Linear Regression", mse1, var1, mse2, var2, mse_test, var_test)
 	debug("Linear ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 
@@ -77,8 +85,9 @@ def SvrRegr():
 	regr = SVR(kernel='poly', C=100, gamma='auto', degree=3, epsilon=.1,coef0=1)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'svr1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'svr2')
+	(mse_test, var_test) = Test(regr, 'svr-test')
 	debug("SVR ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	saveresults("SVR", mse1, var1, mse2, var2)
+	saveresults("SVR", mse1, var1, mse2, var2, mse_test, var_test)
 
 
 #=======================
@@ -86,7 +95,8 @@ def knnRegr():
 	regr = KNeighborsRegressor(n_neighbors=5, weights='distance', metric='manhattan', n_jobs=jobs)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'knn1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'knn2')
-	saveresults("KNN", mse1, var1, mse2, var2)
+	(mse_test, var_test) = Test(regr, 'knn-test')
+	saveresults("KNN", mse1, var1, mse2, var2, mse_test, var_test)
 	debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 #=======================
@@ -95,7 +105,8 @@ def MlpRegr():
 	regr = MLPRegressor(hidden_layer_sizes=(5,3), activation='logistic', solver='adam', learning_rate='invscaling', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'mlp1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'mlp2')
-	saveresults("MLP", mse1, var1, mse2, var2)
+	(mse_test, var_test) = Test(regr, 'mlp-test')
+	saveresults("MLP", mse1, var1, mse2, var2, mse_test, var_test)
 	debug("MLP ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 
@@ -104,7 +115,8 @@ def DTRegr():
 	regr = DecisionTreeRegressor(max_depth=3, splitter='best')
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
-	saveresults("Decision Tree", mse1, var1, mse2, var2)
+	(mse_test, var_test) = Test(regr, 'dt-test')
+	saveresults("Decision Tree", mse1, var1, mse2, var2, mse_test, var_test)
 	debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 
@@ -114,7 +126,8 @@ def RandForestRegr():
 	#regr = RandomForestRegressor(max_depth=8, n_estimators=70, n_jobs=jobs)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
-	saveresults("Random Forest", mse1, var1, mse2, var2)
+	(mse_test, var_test) = Test(regr, 'rf-test')
+	saveresults("Random Forest", mse1, var1, mse2, var2, mse_test, var_test)
 	debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 
@@ -124,8 +137,11 @@ def GradBoostRegr():
 	regr = GradientBoostingRegressor(n_estimators=20, random_state=0)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'gb1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'gb2')
+	(mse_test, var_test) = Test(regr, 'gb-test')
 	debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	saveresults("Gradient Boosting", mse1, var1, mse2, var2)
+	saveresults("Gradient Boosting", mse1, var1, mse2, var2, mse_test, var_test)
+
+
 
 #=======================
 def main(option):
@@ -152,6 +168,8 @@ def main(option):
 			GradBoostRegr()
 			MlpRegr()
 			SvrRegr()
+	elif option == 'test':
+
 	else:
 			sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all>")
 
@@ -159,5 +177,5 @@ def main(option):
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
-		sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all>")
+		sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all|test>")
 	main(sys.argv[1])
