@@ -85,8 +85,8 @@ def SvrRegr():
 	regr = SVR(kernel='poly', C=100, gamma='auto', degree=3, epsilon=.1,coef0=1)
 	(mse1, var1, model1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'svr1')
 	(mse2, var2, model2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'svr2')
-	(test1) = Test(model1, y1_train,  y1_test, 'svr-test1')
-	(test2) = Test(model2, y2_train,  y2_test, 'svr-test2')
+	(test1) = Test(model1, y1_train.reshape(-1,),  y1_test.reshape(-1,), 'svr-test1')
+	(test2) = Test(model2, y2_train.reshape(-1,),  y2_test.reshape(-1,), 'svr-test2')
 	debug("SVR ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	saveresults("SVR", mse1, var1, mse2, var2, test1, test2)
 
