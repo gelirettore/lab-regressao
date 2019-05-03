@@ -79,25 +79,15 @@ def MlpRegr(X_train, X_test, y_train, y_test):
 	return(mse,var)
 
 #=======================
-def DsfRegr(X_train, X_test, y_train, y_test):
+def DTRegr():
 	regr = DecisionTreeRegressor(max_depth=8, splitter='best')
-	y_pred = regr.fit(X_train, y_train).predict(X_test)
-	error = y_pred - y_val
-	np.savetxt('dsf.csv', error, delimiter=',', header='error', comments='')
-	mse =metrics.mean_squared_error(y_val, y_pred)
-	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
-	return(mse, var)
+	return (regr)
 
 
 #=======================
-def RandForestRegr(X_train, X_test, y_train, y_test):
+def RandForestRegr():
 	regr = RandomForestRegressor(max_depth=2, n_estimators=100, n_jobs=jobs)
-	y_pred = regr.fit(X_train, y_train).predict(X_test)
-	error = y_pred - y_val
-	np.savetxt('rf.csv', error, delimiter=',', header='error', comments='')
-	mse =metrics.mean_squared_error(y_val, y_pred)
-	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
-	return(mse, var)
+	return(regr)
 
 
 #=======================
@@ -155,12 +145,14 @@ def main():
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'knn2')
 	#saveresults("KNN", mse1, var1, mse2, var2)
 	debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	#
-	#(mse1, var1) = DsfRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
-	#(mse2, var2) = DsfRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
+
+	regr = DTRegr()
+	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
+	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
 	#saveresults("Decision Tree", mse1, var1, mse2, var2)
-	#debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	
+	debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+
+	regr = RandForestRegr()
 	#(mse1, var1) = RandForestRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
 	#(mse2, var2) = RandForestRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
 	#saveresults("Random Forest", mse1, var1, mse2, var2)
