@@ -119,9 +119,9 @@ def RandForestRegr():
 
 
 #=======================
-def GradBoostRegr(e, r):
+def GradBoostRegr():
 	#regr = GradientBoostingRegressor(n_estimators=150, min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
-	regr = GradientBoostingRegressor(n_estimators=int(e), random_state=int(r))
+	regr = GradientBoostingRegressor(n_estimators=20, random_state=0)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'gb1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'gb2')
 	debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
@@ -139,7 +139,7 @@ def main(option, arg1, arg2):
 	elif option == 'rf':
 			RandForestRegr()
 	elif option == 'gb':
-			GradBoostRegr(arg1, arg2)
+			GradBoostRegr()
 	elif option == 'mlp':
 			MlpRegr()
 	elif option == 'svr':
@@ -158,6 +158,6 @@ def main(option, arg1, arg2):
 
 
 if __name__ == "__main__":
-	if len(sys.argv) < 2:
+	if len(sys.argv) != 2:
 		sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all>")
-	main(sys.argv[1], sys.argv[2], sys.argv[3])
+	main(sys.argv[1])
