@@ -136,11 +136,11 @@ def main(option):
 		debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 	elif option == 'rf' or option == 'all':
-	regr = RandForestRegr()
-	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
-	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
-	#saveresults("Random Forest", mse1, var1, mse2, var2)
-	debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+		regr = RandForestRegr()
+		(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
+		(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
+		#saveresults("Random Forest", mse1, var1, mse2, var2)
+		debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 	elif option == 'gb' or option == 'all':
 		regr = GradBoostRegr()
