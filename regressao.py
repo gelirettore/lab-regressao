@@ -46,20 +46,9 @@ def LinearRegr():
 
 #=======================
 def SvrRegr(X_train, X_test, y_train, y_test):
-	debug("Calculando SVR")
-	#SVR + RBF
-	svr_rbf = SVR(kernel='rbf', C=100, gamma=0.1, epsilon=.1)
-	svr_lin = SVR(kernel='linear', C=100, gamma='auto')
 	svr_poly = SVR(kernel='poly', C=100, gamma='auto', degree=3, epsilon=.1,coef0=1)
-	
-	debug("Fitting and predicting...")
-	y_rbf = svr_rbf.fit(X_train, y_train).predict(X_test)
-	y_lin = svr_lin.fit(X_train, y_train).predict(X_test)
-	y_poly = svr_poly.fit(X_train, y_train).predict(X_test)
-	
-	debug("SVR(rbf): " + str(metrics.mean_absolute_error(y_test, y_rbf)))
-	debug("SVR(linear): " + str(metrics.mean_absolute_error(y_test, y_lin)))
-	debug("SVR(poly): " + str(metrics.mean_absolute_error(y_test, y_poly)))
+	return(svr_poly)
+
 
 #=======================
 def knnRegr():
@@ -79,13 +68,14 @@ def DTRegr():
 
 #=======================
 def RandForestRegr():
-	regr = RandomForestRegressor(max_depth=2, n_estimators=100, n_jobs=jobs)
+	#regr = RandomForestRegressor(max_depth=2, n_estimators=100, n_jobs=jobs)
+	regr = RandomForestRegressor(max_depth=8, n_estimators=70, n_jobs=jobs)
 	return(regr)
 
 
 #=======================
 def GradBoostRegr():
-	regr = GradientBoostingRegressor(n_estimators=100, max_features='log2', min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
+	regr = GradientBoostingRegressor(n_estimators=150, min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
 	return(regr)
 
 #=======================
