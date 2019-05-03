@@ -140,7 +140,7 @@ def main(option):
 	y2_train = min_max_scaler.fit_transform(y2_train)
 	y2_val = min_max_scaler.fit_transform(y2_val)
 	
-	switch(option){
+	switch(option) {
 		case 'linear':
 			LinearRegr()
 			break;
