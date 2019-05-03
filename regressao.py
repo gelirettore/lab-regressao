@@ -66,7 +66,7 @@ def Test(model, y_train, y_test, file):
 	y_pred = model.fit(X_train,y_train).predict(X_test)
 	error = y_pred - y_test
 	np.savetxt(file + ".csv", error, delimiter=',', header='error', comments='')
-	mse = metrics.mean_squared_error(y_val, y_pred)
+	mse = metrics.mean_squared_error(y_test, y_pred)
 	return (mse)
 
 #======================
