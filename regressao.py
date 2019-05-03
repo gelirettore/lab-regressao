@@ -75,7 +75,7 @@ def LinearRegr():
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'lr1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'lr2')
 	(test1) = Test(regr, y1_train, y1_test,  'lr-test1')
-	(test2) = Test(regr, y2_train, y2_test  'lr-test2')
+	(test2) = Test(regr, y2_train, y2_test,  'lr-test2')
 	saveresults("Linear Regression", mse1, var1, mse2, var2, test1, test2)
 	debug("Linear ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
