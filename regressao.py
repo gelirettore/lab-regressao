@@ -16,8 +16,8 @@ import matplotlib.pyplot as plt
 from os import sys
 
 
-data = "usina72.csv"
-tracefile = "regressao.csv"
+data = "csv/usina72.csv"
+tracefile = "csv/regressao.csv"
 kneighbors = 3
 jobs = 90
 
@@ -26,8 +26,8 @@ y1 = dados['f3'].values.reshape(-1,1)
 y2 = dados['f4'].values.reshape(-1,1)
 X = dados[['f5','f6']].values
 
-X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
-X_train, X_val, y1_train, y1_val, y2_train, y2_val = train_test_split(X_t, y1_t, y2_t, test_size=0.3, random_state=48)
+X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=4)
+X_train, X_val, y1_train, y1_val, y2_train, y2_val = train_test_split(X_t, y1_t, y2_t, test_size=0.2, random_state=4)
 
 #normalizando dados
 min_max_scaler = preprocessing.MinMaxScaler()
@@ -57,7 +57,7 @@ def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var, test1, test2):
 def Predict(model, X_train, X_val, y_train, y_val, file):
 	y_pred = model.fit(X_train,y_train).predict(X_val)
 	error = y_pred - y_val
-	np.savetxt(file + ".csv", error, delimiter=',', header='error', comments='')
+	np.savetxt("csv/"+file + ".csv", error, delimiter=',', header='error', comments='')
 	mse = metrics.mean_squared_error(y_val, y_pred)
 	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
 	return (mse, var, model)
@@ -65,7 +65,7 @@ def Predict(model, X_train, X_val, y_train, y_val, file):
 def Test(model, y_train, y_test, file):
 	y_pred = model.predict(X_test)
 	error = y_pred - y_test
-	np.savetxt(file + ".csv", error, delimiter=',', header='error', comments='')
+	np.savetxt("csv/"+file + ".csv", error, delimiter=',', header='error', comments='')
 	mse = metrics.mean_squared_error(y_test, y_pred)
 	return (mse)
 
@@ -93,7 +93,7 @@ def SvrRegr():
 
 #=======================
 def knnRegr():
-	regr = KNeighborsRegressor(n_neighbors=5, weights='distance', metric='manhattan', n_jobs=jobs)
+	regr = KNeighborsRegressor(n_neighbors=5, weights='heighbor, weight e metric', metric='manhattan', n_jobs=jobs)
 	(mse1, var1, model1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'knn1')
 	(mse2, var2, model2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'knn2')
 	(test1) = Test(model1, y1_train,  y1_test, 'knn-test1')
@@ -116,13 +116,10 @@ def MlpRegr():
 #=======================
 def DTRegr():
 	regr = DecisionTreeRegressor(max_depth=3, splitter='best')
-	debug("predicting...")
 	(mse1, var1, model1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 	(mse2, var2, model2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
-	debug("testing...")
 	(test1) = Test(model1, y1_train,  y1_test.reshape(-1,), 'dt-test1')
 	(test2) = Test(model2, y2_train,  y2_test.reshape(-1,), 'dt-test2')
-	debug("saving results...")
 	saveresults("Decision Tree", mse1, var1, mse2, var2, test1, test2)
 	debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
