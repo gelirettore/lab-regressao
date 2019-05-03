@@ -112,7 +112,7 @@ def main():
 	y2 = dados['f4'].values.reshape(-1,1)
 
 	#f4, f5,f6,f9,f10,f11,f12  dsds
-	X = dados[['f5','f6']].values
+	X = dados[['f5','f6','f9']].values
 
 	
 	X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
