@@ -100,8 +100,8 @@ def MlpRegr():
 
 
 #=======================
-def DTRegr(d, s):
-	regr = DecisionTreeRegressor(max_depth=int(d), splitter=s)
+def DTRegr():
+	regr = DecisionTreeRegressor(max_depth=3, splitter='best')
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
 	saveresults("Decision Tree", mse1, var1, mse2, var2)
@@ -109,8 +109,8 @@ def DTRegr(d, s):
 
 
 #=======================
-def RandForestRegr():
-	regr = RandomForestRegressor(max_depth=2, n_estimators=150, n_jobs=jobs)
+def RandForestRegr(d, e):
+	regr = RandomForestRegressor(max_depth=int(d), n_estimators=int(e), n_jobs=jobs)
 	#regr = RandomForestRegressor(max_depth=8, n_estimators=70, n_jobs=jobs)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
@@ -135,9 +135,9 @@ def main(option, arg1, arg2):
 	elif  option == 'knn':
 			knnRegr()
 	elif option == 'dt':
-			DTRegr(arg1, arg2)
+			DTRegr()
 	elif option == 'rf':
-			RandForestRegr()
+			RandForestRegr(arg1, arg2)
 	elif option == 'gb':
 			GradBoostRegr()
 	elif option == 'mlp':
