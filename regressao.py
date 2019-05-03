@@ -168,8 +168,6 @@ def main(option):
 			GradBoostRegr()
 			MlpRegr()
 			SvrRegr()
-	elif option == 'test':
-
 	else:
 			sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all>")
 
@@ -177,5 +175,5 @@ def main(option):
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
-		sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all|test>")
+		sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all>")
 	main(sys.argv[1])
