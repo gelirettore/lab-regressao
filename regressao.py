@@ -110,7 +110,7 @@ def DTRegr():
 
 #=======================
 def RandForestRegr():
-	regr = RandomForestRegressor(max_depth=3, n_estimators=50, max_features=2, n_jobs=jobs)
+	regr = RandomForestRegressor(max_depth=3, n_estimators=50, n_jobs=jobs)
 	#regr = RandomForestRegressor(max_depth=8, n_estimators=70, n_jobs=jobs)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
@@ -119,9 +119,9 @@ def RandForestRegr():
 
 
 #=======================
-def GradBoostRegr():
+def GradBoostRegr(e, r):
 	#regr = GradientBoostingRegressor(n_estimators=150, min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
-	regr = GradientBoostingRegressor(n_estimators=50, random_state=0)
+	regr = GradientBoostingRegressor(n_estimators=int(e), random_state=int(r))
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'gb1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'gb2')
 	debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
@@ -139,7 +139,7 @@ def main(option, arg1, arg2):
 	elif option == 'rf':
 			RandForestRegr()
 	elif option == 'gb':
-			GradBoostRegr()
+			GradBoostRegr(arg1, arg2)
 	elif option == 'mlp':
 			MlpRegr()
 	elif option == 'svr':
