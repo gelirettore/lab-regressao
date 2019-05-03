@@ -62,7 +62,7 @@ def Predict(model, X_train, X_val, y_train, y_val, file):
 	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
 	return (mse, var)
 
-def Test(model, y_train, file):
+def Test(model, y_train, y_test file):
 	y_pred = model.fit(X_train,y_train).predict(X_test)
 	error = y_pred - y_test
 	np.savetxt(file + ".csv", error, delimiter=',', header='error', comments='')
@@ -74,8 +74,8 @@ def LinearRegr():
 	regr = LinearRegression()
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'lr1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'lr2')
-	(test1) = Test(regr, y1_train,  'lr-test1')
-	(test2) = Test(regr, y2_train,  'lr-test2')
+	(test1) = Test(regr, y1_train, y1_test,  'lr-test1')
+	(test2) = Test(regr, y2_train, y2_test  'lr-test2')
 	saveresults("Linear Regression", mse1, var1, mse2, var2, test1, test2)
 	debug("Linear ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
@@ -85,8 +85,8 @@ def SvrRegr():
 	regr = SVR(kernel='poly', C=100, gamma='auto', degree=3, epsilon=.1,coef0=1)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'svr1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'svr2')
-	(test1) = Test(regr, y1_train,  'svr-test1')
-	(test2) = Test(regr, y2_train,  'svr-test2')
+	(test1) = Test(regr, y1_train,  y1_test, 'svr-test1')
+	(test2) = Test(regr, y2_train,  y2_test, 'svr-test2')
 	debug("SVR ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	saveresults("SVR", mse1, var1, mse2, var2, test1, test2)
 
@@ -96,8 +96,8 @@ def knnRegr():
 	regr = KNeighborsRegressor(n_neighbors=5, weights='distance', metric='manhattan', n_jobs=jobs)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'knn1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'knn2')
-	(test1) = Test(regr, y1_train,  'knn-test1')
-	(test2) = Test(regr, y2_train,  'lknn-test2')
+	(test1) = Test(regr, y1_train,  y1_test, 'knn-test1')
+	(test2) = Test(regr, y2_train,  y2_test, 'lknn-test2')
 	saveresults("KNN", mse1, var1, mse2, var2, test1, test2)
 	debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
@@ -107,8 +107,8 @@ def MlpRegr():
 	regr = MLPRegressor(hidden_layer_sizes=(5,3), activation='logistic', solver='adam', learning_rate='invscaling', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'mlp1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'mlp2')
-	(test1) = Test(regr, y1_train,  'mlp-test1')
-	(test2) = Test(regr, y2_train,  'mlp-test2')
+	(test1) = Test(regr, y1_train,  y1_test, 'mlp-test1')
+	(test2) = Test(regr, y2_train,  y2_test, 'mlp-test2')
 	saveresults("MLP", mse1, var1, mse2, var2, test1, test2)
 	debug("MLP ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
@@ -118,8 +118,8 @@ def DTRegr():
 	regr = DecisionTreeRegressor(max_depth=3, splitter='best')
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
-	(test1) = Test(regr, y1_train,  'dt-test1')
-	(test2) = Test(regr, y2_train,  'dt-test2')
+	(test1) = Test(regr, y1_train,  y1_test, 'dt-test1')
+	(test2) = Test(regr, y2_train,  y2_test, 'dt-test2')
 	saveresults("Decision Tree", mse1, var1, mse2, var2, test1, test2)
 	debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
@@ -130,8 +130,8 @@ def RandForestRegr():
 	#regr = RandomForestRegressor(max_depth=8, n_estimators=70, n_jobs=jobs)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
-	(test1) = Test(regr, y1_train,  'rf-test1')
-	(test2) = Test(regr, y2_train,  'rf-test2')
+	(test1) = Test(regr, y1_train, y1_test, 'rf-test1')
+	(test2) = Test(regr, y2_train, y2_test, 'rf-test2')
 	saveresults("Random Forest", mse1, var1, mse2, var2, test1, test2)
 	debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
@@ -142,8 +142,8 @@ def GradBoostRegr():
 	regr = GradientBoostingRegressor(n_estimators=20, random_state=0)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'gb1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'gb2')
-	(test1) = Test(regr, y1_train,  'gb-test1')
-	(test2) = Test(regr, y2_train,  'gb-test2')
+	(test1) = Test(regr, y1_train, y1_test, 'gb-test1')
+	(test2) = Test(regr, y2_train, y2_test, 'gb-test2')
 	debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	saveresults("Gradient Boosting", mse1, var1, mse2, var2, test1, test2)
 
