@@ -21,7 +21,36 @@ tracefile = "regressao.csv"
 kneighbors = 3
 jobs = 90
 
-X_train = X_test = X_val = y1_test = y1_train = y1_val = y2_test = y2_train = y2_val = {}
+debug("Carregando dados")
+#carrega dados e divide
+
+dados = pd.read_csv(data)
+y1 = dados['f3'].values.reshape(-1,1)
+y2 = dados['f4'].values.reshape(-1,1)
+
+#f4, f5,f6,f9,f10,f11,f12  dsds
+X = dados[['f5','f6']].values
+
+
+X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
+X_train, X_val, y1_train, y1_val, y2_train, y2_val = train_test_split(X_t, y1_t, y2_t, test_size=0.3, random_state=48)
+#criar vetores de teste, mudar teste para validacao
+#nao usar cross validation
+#
+
+#normalizando dados
+min_max_scaler = preprocessing.MinMaxScaler()
+X_train = min_max_scaler.fit_transform(X_train)
+X_test = min_max_scaler.fit_transform(X_test)
+X_val = min_max_scaler.fit_transform(X_val)
+
+y1_test = min_max_scaler.fit_transform(y1_test)
+y1_train = min_max_scaler.fit_transform(y1_train)
+y1_val = min_max_scaler.fit_transform(y1_val)
+
+y2_test = min_max_scaler.fit_transform(y2_test)
+y2_train = min_max_scaler.fit_transform(y2_train)
+y2_val = min_max_scaler.fit_transform(y2_val)
 
 def debug(text):
 	print(str(text));
@@ -109,37 +138,7 @@ def GradBoostRegr():
 
 #=======================
 def main(option):
-	debug("Carregando dados")
-	#carrega dados e divide
-	
-	dados = pd.read_csv(data)
-	y1 = dados['f3'].values.reshape(-1,1)
-	y2 = dados['f4'].values.reshape(-1,1)
 
-	#f4, f5,f6,f9,f10,f11,f12  dsds
-	X = dados[['f5','f6']].values
-
-	
-	X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
-	X_train, X_val, y1_train, y1_val, y2_train, y2_val = train_test_split(X_t, y1_t, y2_t, test_size=0.3, random_state=48)
-	#criar vetores de teste, mudar teste para validacao
-	#nao usar cross validation
-	#
-	
-	#normalizando dados
-	min_max_scaler = preprocessing.MinMaxScaler()
-	X_train = min_max_scaler.fit_transform(X_train)
-	X_test = min_max_scaler.fit_transform(X_test)
-	X_val = min_max_scaler.fit_transform(X_val)
-	
-	y1_test = min_max_scaler.fit_transform(y1_test)
-	y1_train = min_max_scaler.fit_transform(y1_train)
-	y1_val = min_max_scaler.fit_transform(y1_val)
-	
-	y2_test = min_max_scaler.fit_transform(y2_test)
-	y2_train = min_max_scaler.fit_transform(y2_train)
-	y2_val = min_max_scaler.fit_transform(y2_val)
-	
 	if option == 'linear':
 			LinearRegr()
 	elif  option == 'knn':
