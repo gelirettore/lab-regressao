@@ -59,7 +59,6 @@ def knnRegr():
 #=======================
 def MlpRegr():
 	regr = MLPRegressor(hidden_layer_sizes=(5,2), activation='relu', solver='adam', learning_rate='adaptive', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
-	print regr.n_layers_
 	return(regr)
 
 #=======================
