@@ -128,14 +128,14 @@ def GradBoostRegr():
 	saveresults("Gradient Boosting", mse1, var1, mse2, var2)
 
 #=======================
-def main(option):
+def main(option, arg1, arg2):
 
 	if option == 'linear':
 			LinearRegr()
 	elif  option == 'knn':
 			knnRegr()
 	elif option == 'dt':
-			DTRegr(sys.argv[2], sys.argv[3])
+			DTRegr(arg1, arg2)
 	elif option == 'rf':
 			RandForestRegr()
 	elif option == 'gb':
@@ -160,4 +160,4 @@ def main(option):
 if __name__ == "__main__":
 	if len(sys.argv) < 2:
 		sys.exit("Use: "+sys.argv[0]+" <linear|knn|dt|rf|gb|mlp|svr|all>")
-	main(sys.argv[1])
+	main(sys.argv[1], sys.argv[2], sys.argv[3])
