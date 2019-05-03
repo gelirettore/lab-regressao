@@ -150,7 +150,7 @@ def main(option):
 			RandForestRegr()
 	elif option == 'gb':
 			GradBoostRegr()
-	elif option == 'mlp';
+	elif option == 'mlp':
 			MlpRegr()
 	elif option == 'svr':
 			SvrRegr()
