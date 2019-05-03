@@ -57,7 +57,8 @@ def knnRegr():
 
 #=======================
 def MlpRegr():
-	regr = MLPRegressor(hidden_layer_sizes=(5,), activation='relu', solver='adam', learning_rate='adaptive', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
+	regr = MLPRegressor(hidden_layer_sizes=(5,2), activation='relu', solver='adam', learning_rate='adaptive', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
+	print regr.n_layers_
 	return(regr)
 
 #=======================
@@ -68,8 +69,8 @@ def DTRegr():
 
 #=======================
 def RandForestRegr():
-	#regr = RandomForestRegressor(max_depth=2, n_estimators=100, n_jobs=jobs)
-	regr = RandomForestRegressor(max_depth=8, n_estimators=70, n_jobs=jobs)
+	regr = RandomForestRegressor(max_depth=2, n_estimators=150, n_jobs=jobs)
+	#regr = RandomForestRegressor(max_depth=8, n_estimators=70, n_jobs=jobs)
 	return(regr)
 
 
