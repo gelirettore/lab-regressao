@@ -31,10 +31,10 @@ def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
 	text_file.close()
 
 #====================== PREDICT ==================
-def Predict(model, X_train, X_val, y_train, y_val):
+def Predict(model, X_train, X_val, y_train, y_val, file):
 	y_pred = model.fit(X_train,y_train).predict(X_val)
 	error = y_pred - y_val
-	np.savetxt('knn.csv', error, delimiter=',', header='error', comments='')
+	np.savetxt(file + ".csv", error, delimiter=',', header='error', comments='')
 	mse =metrics.mean_squared_error(y_val, y_pred)
 	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
 	return (mse, var)
@@ -145,14 +145,14 @@ def main():
 	
 	#===
 	regr = LinearRegr()
-	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val)
-	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val)
+	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'lr1')
+	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'lr2')
 	#saveresults("Linear Regression", mse1, var1, mse2, var2)
 	debug("Linear ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	#===
 	regr = knnRegr()
-	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val)
-	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val)
+	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'knn1')
+	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'knn2')
 	#saveresults("KNN", mse1, var1, mse2, var2)
 	debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	#
