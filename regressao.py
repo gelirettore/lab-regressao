@@ -30,15 +30,19 @@ def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
 	text_file.write(txt+'\n')
 	text_file.close()
 
-#======================
-def LinearRegr(X_train, X_val, y_train, y_val):
-	regr = LinearRegression()
-	y_pred = regr.fit(X_train, y_train).predict(X_val)
+#====================== PREDICT ==================
+def Predict(model, X_train, X_val, y_train, y_val)
+	y_pred = model.fit(X_train,y_train).predict(X_val)
 	error = y_pred - y_val
-	np.savetxt('lr.csv', error, delimiter=',', header='error', comments='')
+	np.savetxt('knn.csv', error, delimiter=',', header='error', comments='')
 	mse =metrics.mean_squared_error(y_val, y_pred)
 	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
 	return (mse, var)
+
+#======================
+def LinearRegr():
+	regr = LinearRegression()
+	return(regr)
 
 #=======================
 def SvrRegr(X_train, X_test, y_train, y_test):
@@ -102,9 +106,9 @@ def RandForestRegr(X_train, X_test, y_train, y_test):
 
 
 #=======================
-def GradBoostRegr(X_train, X_test, y_train, y_test):
+def GradBoostRegr(X_train, X_test, y_train, y_val):
 	regr = GradientBoostingRegressor(n_estimators=100, max_features='log2', min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
-	y_pred = regr.fit(X_train, y_train).predict(X_test)
+	y_pred = regr.fit(X_train, y_train).predict(X_val)
 	error = y_pred - y_val
 	np.savetxt('gb.csv', error, delimiter=',', header='error', comments='')
 	mse =metrics.mean_squared_error(y_val, y_pred)
@@ -144,33 +148,39 @@ def main():
 	y2_train = min_max_scaler.fit_transform(y2_train)
 	y2_val = min_max_scaler.fit_transform(y2_val)
 	
-	
-	(mse1, var1) = LinearRegr(X_train, X_val, y1_train, y1_val)
-	(mse2, var2) = LinearRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	#===
+	regr = LinearRegr()
+	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val)
+	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val)
 	#saveresults("Linear Regression", mse1, var1, mse2, var2)
 	debug("Linear ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	(mse1, var1) = knnRegr(X_train_minmax, X_test_minmax, y1_train, y1_test)
-	(mse2, var2) = knnRegr(X_train_minmax, X_test_minmax, y2_train, y2_test)
+	#===
+	#(mse1, var1) = knnRegr(X_train, X_val, y1_train, y1_val)
+	#(mse2, var2) = knnRegr(X_train, X_val, y2_train, y2_val)
 	#saveresults("KNN", mse1, var1, mse2, var2)
-	debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	(mse1, var1) = DsfRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
-	(mse2, var2) = DsfRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+	#
+	#(mse1, var1) = DsfRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
+	#(mse2, var2) = DsfRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
 	#saveresults("Decision Tree", mse1, var1, mse2, var2)
-	debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	(mse1, var1) = RandForestRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
-	(mse2, var2) = RandForestRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	#debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+	
+	#(mse1, var1) = RandForestRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
+	#(mse2, var2) = RandForestRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
 	#saveresults("Random Forest", mse1, var1, mse2, var2)
-	debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	(mse1, var1) = GradBoostRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
-	(mse2, var2) = GradBoostRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
-	debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+	#debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+	
+	#(mse1, var1) = GradBoostRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
+	#(mse2, var2) = GradBoostRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
+	#debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	#saveresults("Gradient Boosting", mse1, var1, mse2, var2)
-	(mse1, var1) = MlpRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
-	(mse2, var2) = MlpRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
+	
+	#(mse1, var1) = MlpRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
+	#(mse2, var2) = MlpRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
 	#saveresults("MLP", mse1, var1, mse2, var2)
-	debug("MLP ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+	#debug("MLP ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
-	#SvrRegr(X_train_minmax, X_test_minmax, y1_train.reshape(-1,), y1_test.reshape(-1,))
+	#SvrRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
 	#SvrRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 
 
