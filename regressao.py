@@ -157,7 +157,7 @@ def main():
 	#saveresults("MLP", mse1, var1, mse2, var2)
 	#debug("MLP ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
-	#SvrRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
+	SvrRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
 	#SvrRegr(X_train_minmax, X_test_minmax, y2_train.reshape(-1,), y2_test.reshape(-1,))
 
 
