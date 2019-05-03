@@ -101,7 +101,7 @@ def MlpRegr():
 
 #=======================
 def DTRegr(d, s):
-	regr = DecisionTreeRegressor(max_depth=d, splitter=s)
+	regr = DecisionTreeRegressor(max_depth=int(d), splitter=s)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
 	saveresults("Decision Tree", mse1, var1, mse2, var2)
