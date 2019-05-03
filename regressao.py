@@ -34,7 +34,7 @@ def saveresults(regressor, f3_mse, f3_var, f5_mse, f5_var):
 def LinearRegr(X_train, X_val, y_train, y_val):
 	regr = LinearRegression()
 	y_pred = regr.fit(X_train, y_train).predict(X_val)
-	error = {y_val, y_pred - y_val}
+	error = np.ndarray(shape=(y_val, y_pred - y_val), dtype=float)
 	np.savetxt('lr.csv', error, delimiter=',', header='error', comments='')
 	mse =metrics.mean_squared_error(y_val, y_pred)
 	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
