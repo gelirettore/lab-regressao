@@ -143,10 +143,11 @@ def main():
 	debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	#saveresults("Gradient Boosting", mse1, var1, mse2, var2)
 	
-	#(mse1, var1) = MlpRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
-	#(mse2, var2) = MlpRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
+	regr = MLPRegressor()
+	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'mlp1')
+	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'mlp2')
 	#saveresults("MLP", mse1, var1, mse2, var2)
-	#debug("MLP ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+	debug("MLP ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 	regr = SvrRegr()
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'svr1')
