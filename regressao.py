@@ -62,14 +62,9 @@ def SvrRegr(X_train, X_test, y_train, y_test):
 	debug("SVR(poly): " + str(metrics.mean_absolute_error(y_test, y_poly)))
 
 #=======================
-def knnRegr(X_train, X_test, y_train, y_test):
+def knnRegr():
 	knn = KNeighborsRegressor(n_neighbors=5, weights='distance', metric='manhattan', n_jobs=jobs)
-	y_pred = knn.fit(X_train,y_train).predict(X_test)
-	error = y_pred - y_val
-	np.savetxt('knn.csv', error, delimiter=',', header='error', comments='')
-	mse =metrics.mean_squared_error(y_val, y_pred)
-	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
-	return(mse, var)
+	return(knn)
 
 #=======================
 def MlpRegr(X_train, X_test, y_train, y_test):
@@ -155,10 +150,11 @@ def main():
 	#saveresults("Linear Regression", mse1, var1, mse2, var2)
 	debug("Linear ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	#===
-	#(mse1, var1) = knnRegr(X_train, X_val, y1_train, y1_val)
-	#(mse2, var2) = knnRegr(X_train, X_val, y2_train, y2_val)
+	regr = knnRegr()
+	(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val)
+	(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val)
 	#saveresults("KNN", mse1, var1, mse2, var2)
-	#debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+	debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	#
 	#(mse1, var1) = DsfRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
 	#(mse2, var2) = DsfRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
