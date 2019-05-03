@@ -76,7 +76,8 @@ def RandForestRegr():
 
 #=======================
 def GradBoostRegr():
-	regr = GradientBoostingRegressor(n_estimators=150, min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
+	#regr = GradientBoostingRegressor(n_estimators=150, min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
+	regr = GradientBoostingRegressor(n_estimators=50, random_state=0)
 	return(regr)
 
 #=======================
@@ -143,7 +144,7 @@ def main():
 	debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	#saveresults("Gradient Boosting", mse1, var1, mse2, var2)
 	
-	regr = MLPRegressor()
+	regr = MlpRegr()
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'mlp1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'mlp2')
 	#saveresults("MLP", mse1, var1, mse2, var2)
