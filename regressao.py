@@ -37,11 +37,9 @@ def LinearRegr(X_train, X_val, y_train, y_val):
 	error = y_pred - y_val
 	np.savetxt('lr.csv', error, delimiter=',', header='error', comments='')
 	mse =metrics.mean_squared_error(y_val, y_pred)
-	var = metrics.explained_variance_score(y_val, y_pred, multioutput='uniform_average')
+	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
 	print mse
-	print metrics.explained_variance_score(y_val, y_pred, multioutput='raw_values')
-	print metrics.explained_variance_score(y_val, y_pred, multioutput='uniform_average')
-	print metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
+	print var
 	return (mse, var)
 
 #=======================
@@ -112,7 +110,7 @@ def main():
 	y2 = dados['f4'].values.reshape(-1,1)
 
 	#f4, f5,f6,f9,f10,f11,f12  dsds
-	X = dados[['f5','f6','f9']].values
+	X = dados[['f5','f6','f11']].values
 
 	
 	X_t, X_test, y1_t, y1_test, y2_t, y2_test = train_test_split(X, y1, y2, test_size=0.5, random_state=48)
