@@ -128,7 +128,7 @@ def GradBoostRegr():
 	saveresults("Gradient Boosting", mse1, var1, mse2, var2)
 
 #=======================
-def main(option, arg1, arg2):
+def main(option):
 
 	if option == 'linear':
 			LinearRegr()
