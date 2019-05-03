@@ -67,16 +67,9 @@ def knnRegr():
 	return(knn)
 
 #=======================
-def MlpRegr(X_train, X_test, y_train, y_test):
-	debug("Calculando MLP")
+def MlpRegr():
 	regr = MLPRegressor(hidden_layer_sizes=(5,), activation='relu', solver='adam', learning_rate='adaptive', max_iter=1000, learning_rate_init=0.01, alpha=0.01)
-	
-	y_pred = regr.fit(X_train, y_train).predict(X_test)
-	error = y_pred - y_val
-	np.savetxt('mlp.csv', error, delimiter=',', header='error', comments='')
-	mse =metrics.mean_squared_error(y_val, y_pred)
-	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
-	return(mse,var)
+	return(regr)
 
 #=======================
 def DTRegr():
@@ -91,14 +84,9 @@ def RandForestRegr():
 
 
 #=======================
-def GradBoostRegr(X_train, X_test, y_train, y_val):
+def GradBoostRegr():
 	regr = GradientBoostingRegressor(n_estimators=100, max_features='log2', min_samples_split=2, max_depth=1, learning_rate=0.01, loss='quantile', criterion='mse')
-	y_pred = regr.fit(X_train, y_train).predict(X_val)
-	error = y_pred - y_val
-	np.savetxt('gb.csv', error, delimiter=',', header='error', comments='')
-	mse =metrics.mean_squared_error(y_val, y_pred)
-	var = metrics.explained_variance_score(y_val, y_pred, multioutput='variance_weighted')
-	return(mse,var)
+	return(regr)
 
 #=======================
 def main():
@@ -153,14 +141,15 @@ def main():
 	debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
 	regr = RandForestRegr()
-	#(mse1, var1) = RandForestRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
-	#(mse2, var2) = RandForestRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
+	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
+	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
 	#saveresults("Random Forest", mse1, var1, mse2, var2)
-	#debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
-	
-	#(mse1, var1) = GradBoostRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
-	#(mse2, var2) = GradBoostRegr(X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,))
-	#debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+	debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
+
+	regr = GradBoostRegr()
+	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'gb1')
+	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'gb2')
+	debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 	#saveresults("Gradient Boosting", mse1, var1, mse2, var2)
 	
 	#(mse1, var1) = MlpRegr(X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,))
