@@ -114,49 +114,49 @@ def main(option):
 	y2_train = min_max_scaler.fit_transform(y2_train)
 	y2_val = min_max_scaler.fit_transform(y2_val)
 	
-	if option == 'linear' || option == 'all':
+	if option == 'linear' or option == 'all':
 		regr = LinearRegr()
 		(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'lr1')
 		(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'lr2')
 		#saveresults("Linear Regression", mse1, var1, mse2, var2)
 		debug("Linear ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
-	else if option == 'knn' || option == 'all':
+	else if option == 'knn' or option == 'all':
 		regr = knnRegr()
 		(mse1, var1) = Predict(regr, X_train, X_val, y1_train, y1_val, 'knn1')
 		(mse2, var2) = Predict(regr, X_train, X_val, y2_train, y2_val, 'knn2')
 		#saveresults("KNN", mse1, var1, mse2, var2)
 		debug("KNN ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
-	else if option == 'dt' || option == 'all':
+	else if option == 'dt' or option == 'all':
 		regr = DTRegr()
 		(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'dt1')
 		(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'dt2')
 		#saveresults("Decision Tree", mse1, var1, mse2, var2)
 		debug("Decision Tree ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
-	else if option == 'rf' || option == 'all':
+	else if option == 'rf' or option == 'all':
 	regr = RandForestRegr()
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
 	#saveresults("Random Forest", mse1, var1, mse2, var2)
 	debug("Random Forest ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
-	else if option == 'gb' || option == 'all':
+	else if option == 'gb' or option == 'all':
 		regr = GradBoostRegr()
 		(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'gb1')
 		(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'gb2')
 		debug("Gradient Boosting ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 		#saveresults("Gradient Boosting", mse1, var1, mse2, var2)
 
-	else if option == 'mlp' || option == 'all':
+	else if option == 'mlp' or option == 'all':
 		regr = MlpRegr()
 		(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'mlp1')
 		(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'mlp2')
 		#saveresults("MLP", mse1, var1, mse2, var2)
 		debug("MLP ["+str(mse1)+","+ str(var1)+","+ str(mse2)+","+ str(var2)+"]")
 
-	else if option == 'svr' || option == 'all':
+	else if option == 'svr' or option == 'all':
 		regr = SvrRegr()
 		(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'svr1')
 		(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'svr2')
