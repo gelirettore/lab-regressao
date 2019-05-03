@@ -109,8 +109,8 @@ def DTRegr():
 
 
 #=======================
-def RandForestRegr(d, e):
-	regr = RandomForestRegressor(max_depth=int(d), n_estimators=int(e), n_jobs=jobs)
+def RandForestRegr():
+	regr = RandomForestRegressor(max_depth=3, n_estimators=50, max_features=2, n_jobs=jobs)
 	#regr = RandomForestRegressor(max_depth=8, n_estimators=70, n_jobs=jobs)
 	(mse1, var1) = Predict(regr, X_train, X_val, y1_train.reshape(-1,), y1_val.reshape(-1,), 'rf1')
 	(mse2, var2) = Predict(regr, X_train, X_val, y2_train.reshape(-1,), y2_val.reshape(-1,), 'rf2')
@@ -137,7 +137,7 @@ def main(option, arg1, arg2):
 	elif option == 'dt':
 			DTRegr()
 	elif option == 'rf':
-			RandForestRegr(arg1, arg2)
+			RandForestRegr()
 	elif option == 'gb':
 			GradBoostRegr()
 	elif option == 'mlp':
