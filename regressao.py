@@ -13,6 +13,7 @@ from sklearn import metrics, model_selection, linear_model
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from os import sys
 
 
 data = "usina72.csv"
