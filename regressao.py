@@ -154,7 +154,7 @@ def main(option):
 			MlpRegr()
 	elif option == 'svr':
 			SvrRegr()
-	elif option == 'all:
+	elif option == 'all':
 			LinearRegr()
 			knnRegr()
 			DTRegr()
